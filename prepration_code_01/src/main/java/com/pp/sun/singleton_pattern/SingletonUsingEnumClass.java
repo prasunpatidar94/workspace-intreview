@@ -1,4 +1,4 @@
-package com.pp.sun.singleton;
+package com.pp.sun.singleton_pattern;
 
 //Called Code
 public enum SingletonUsingEnumClass{
