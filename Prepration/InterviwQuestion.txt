@@ -1,0 +1,143 @@
+class Test{
+
+PSVM(arg ...){
+	list = 1,3,4,7,8,4,9,10;
+
+	Integet out =list.stream().distict().sorted().reverse().skip(1).findfirst();
+	sout(out);
+}
+}
+
+more safe:
+get -> 
+post  -- >safe 
+
+
+1. SOLID principle 
+2. method hinding concept 
+4. propogetion in java 
+3 ser ->
+5. call microserice symantaniasly 
+
+
+Abstraction, Inheritance, Polymorphism, Encapsulation
+
+
+Java
+├── 1. Core Java (JSE)
+│   ├── Language Basics
+│   │   ├── Variables, Data Types
+│   │   ├── Operators, Control Statements
+│   │   ├── Loops (for, while)
+│   │   └── Arrays
+│   ├── OOP Principles
+│   │   ├── Abstraction
+│   │   ├── Inheritance
+│   │   ├── Polymorphism
+│   │   └── Encapsulation
+│   ├── Classes and Objects
+│   │   ├── Constructors
+│   │   ├── Method Overloading/Overriding
+│   │   └── Static / final / this / super
+│   ├── Exception Handling
+│   │   ├── try-catch-finally
+│   │   ├── throw & throws
+│   │   └── Custom Exceptions
+│   ├── Java API
+│   │   ├── String, Math, Wrapper, Object
+│   │   └── System, Arrays, Date & Time
+│   ├── Java Collections Framework (JCF)
+│   │   ├── List, Set, Map, Queue
+│   │   ├── Iterator, Comparable, Comparator
+│   │   └── Collections Utility Class
+│   ├── Java 8+ Features
+│   │   ├── Lambda Expressions
+│   │   ├── Stream API
+│   │   ├── Optional
+│   │   ├── Functional Interfaces
+│   │   └── Default & Static Methods in Interfaces
+│   ├── Multithreading & Concurrency
+│   │   ├── Thread, Runnable
+│   │   ├── Synchronization, wait/notify
+│   │   ├── ExecutorService, Callable, Future
+│   │   └── Concurrent Collections, Locks
+│   └── File I/O & Serialization
+│       ├── java.io, java.nio
+│       ├── BufferedReader, Scanner
+│       └── Serializable & Externalizable
+
+├── 2. Advanced Java
+│   ├── JDBC (Java Database Connectivity)
+│   │   ├── Connection, Statement, PreparedStatement
+│   │   └── Transactions, Batch Processing
+│   ├── Servlets
+│   │   ├── doGet/doPost
+│   │   ├── Sessions, Cookies
+│   │   └── RequestDispatcher
+│   ├── JSP (Java Server Pages)
+│   │   ├── Scriptlets, Directives, JSTL
+│   │   └── Expression Language
+│   ├── Filters & Listeners
+│   └── WebSockets
+
+├── 3. Enterprise Java (Java EE / Jakarta EE)
+│   ├── EJB (Enterprise Java Beans)
+│   ├── JPA (Java Persistence API)
+│   │   ├── ORM Mapping, Entity, Repository
+│   │   └── JPQL, Native Queries
+│   ├── JMS (Java Messaging Service)
+│   └── Web Services
+│       ├── SOAP (JAX-WS)
+│       └── REST (JAX-RS)
+
+├── 4. Spring Framework (Enterprise Development)
+│   ├── Spring Core (IoC, DI)
+│   ├── Spring MVC (Web Layer)
+│   ├── Spring Boot (Auto Configuration)
+│   ├── Spring Data JPA
+│   ├── Spring Security
+│   ├── Spring AOP
+│   ├── Spring Batch
+│   └── Spring Cloud (Microservices)
+
+├── 5. Microservices & Cloud
+│   ├── REST APIs with Spring Boot
+│   ├── API Gateway, Service Registry (Eureka)
+│   ├── Config Server
+│   ├── Circuit Breaker (Resilience4j/Hystrix)
+│   ├── Docker
+│   ├── Kubernetes
+│   ├── CI/CD (Jenkins/GitHub Actions)
+│   └── Cloud (AWS, Azure, GCP)
+
+├── 6. Tools & Testing
+│   ├── Build Tools: Maven, Gradle
+│   ├── Testing: JUnit 5, Mockito, TestNG
+│   ├── Logging: SLF4J, Logback, Log4j2
+│   ├── Profiling: VisualVM, JConsole
+│   ├── Version Control: Git
+│   └── Code Quality: SonarQube, PMD, Checkstyle
+
+├── 7. Design Patterns
+│   ├── Creational: Singleton, Factory, Builder
+│   ├── Structural: Adapter, Decorator, Proxy
+│   └── Behavioral: Strategy, Observer, Command
+
+├── 8. JVM & Performance
+│   ├── JVM Architecture
+│   │   ├── ClassLoader, Method Area, Heap, Stack
+│   ├── Garbage Collection (GC)
+│   │   ├── G1, Parallel GC, CMS
+│   ├── JVM Tuning Parameters
+│   └── Memory Leaks & Thread Dumps
+
+└── 9. New Java Features (Java 9 – Java 21+)
+    ├── Modules (Java 9)
+    ├── var (Java 10)
+    ├── HttpClient (Java 11)
+    ├── Records (Java 14)
+    ├── Switch Expressions (Java 14)
+    ├── Text Blocks (Java 15)
+    ├── Sealed Classes (Java 17)
+    ├── Pattern Matching (Java 17+)
+    └── Virtual Threads (Java 19+ Preview)

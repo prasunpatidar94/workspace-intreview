@@ -1,11 +1,9 @@
 package com.pp.sun.thread_poc;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class ThreadCallerClass {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         // START Thread Class- simple way to create Thread with extends Thread Class
         /*Thread thread1=new Thread(new ThreadCreationWithExtendsThreadClass("Task-1"));
@@ -36,8 +34,12 @@ public class ThreadCallerClass {
 //      START Executor Single Creation
 
         ExecutorService executorService= Executors.newSingleThreadExecutor();
-        executorService.submit(()-> System.out.println("task with Executors Services Class -1"));
-        ex
+        executorService.execute(()-> System.out.println("task with Executors Services Class -1"));
+        Future<Integer> res =executorService.submit(()->{
+            Thread.sleep(2000);
+            return(200+300);
+        });
+        System.out.println(res.get());
         executorService.shutdown();
 //      END Executor Single Creation===================================================
 
