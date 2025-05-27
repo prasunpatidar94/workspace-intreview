@@ -4,6 +4,7 @@ import org.springframework.expression.spel.ast.Identifier;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 public class FindOccurenceFromInput {
@@ -24,8 +25,15 @@ public class FindOccurenceFromInput {
                 .entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).skip(1).findFirst();
         System.out.println(sal.get());
 
-//        Set<Double> = new HashSet<>(empsSalary.;
+        Map<Double,Double> outavr =empsSalary.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.averagingDouble(e->e)));
+        System.out.println(outavr);
 
+        Optional<Double> outSum =empsSalary.stream().filter(e->e==0)
+                .reduce((aDouble, aDouble2) -> aDouble+aDouble2);
+
+        System.out.println(outSum.orElseGet(()->0.0));
+        System.out.println(outSum.orElse(0.0));
+//        System.out.println(outSum.orElseThrow(NegativeArraySizeException::new));
     }
 
 }
