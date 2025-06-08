@@ -15,9 +15,19 @@ public class BuilderCallerClass {
                 .paymentDate(new Date())
                 .paymentWay("Online")
                 .build();
-
-
-
         System.out.println(paymentCreation.getPaymentAmount());
+
+
+//
+//        BuilderWithLombok builderWithLombok =
+//        BuilderWithLombok
+//                .builder()
+//                .id(123)
+//                .paymentAmount(123.345)
+//                .paymentDate(new Date())
+//                .paymentWay("Online")
+//                .build();
+//
+//        System.out.println(builderWithLombok.getId());
     }
 }
