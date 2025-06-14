@@ -12,4 +12,9 @@ public class RestController {
     public String healthCheck() {
         return "I AM OK";
     }
+
+    @GetMapping(path = "/payment")
+    public String doPayment() {
+        return "I AM GOING TO DO PAYMENT ...!";
+    }
 }
