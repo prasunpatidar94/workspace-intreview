@@ -1,0 +1,54 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: accounts
+
+  datasource:
+    url: jdbc:h2:mem:testdb  # or jdbc:h2:file:./data/testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console       # Access via http://localhost:8080/h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update          # Disable Hibernate DDL generation if using schema.sql
+    show-sql: true
+
+  sql:
+    init:
+      mode: always            # Options: always, embedded, never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: false
+
+#  datasource:
+#    url: jdbc:h1:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#    initialization-mode: always
+#
+#  h2:
+#    console:
+#      enable: true
+#      path: /h2-console
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format-sql: true
+#  sql:
+#    init:
+#      mode: always           # Options: always, never, embedded
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+#      continue-on-error: false
+
