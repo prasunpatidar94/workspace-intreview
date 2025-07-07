@@ -14,16 +14,18 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(updatable = false)
-    private String createdBy;
+    private String createdBy = "Admin";
 
     @Column(insertable = false)
-    private LocalDateTime updatedAt ;
+    private LocalDateTime updatedAt = LocalDateTime.now() ;
 
     @Column(insertable = false)
-    private String updatedBy ;
+    private String updatedBy = "Anonymous";
+
+
 
 
 }
