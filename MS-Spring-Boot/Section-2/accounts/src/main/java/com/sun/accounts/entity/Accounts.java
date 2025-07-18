@@ -19,10 +19,7 @@ public class Accounts extends BaseEntity {
     @Column(name = "account_number") // dy defaltt but mantion
     private Long accountNumber;
     private Long customerId;
-    private String name;
     private String accountType;
     private String branchAddress;
-    private String email;
-    private String mobileNumber;
 
 }
