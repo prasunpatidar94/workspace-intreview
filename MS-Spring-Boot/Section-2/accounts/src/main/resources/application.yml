@@ -27,6 +27,11 @@ spring:
       data-locations: classpath:data.sql
       continue-on-error: false
 
+      # swagger-ui custom path
+#springdoc:
+#  swagger-ui.path: /account-api-doc.html
+
+
 #  datasource:
 #    url: jdbc:h1:mem:testdb
 #    driver-class-name: org.h2.Driver
