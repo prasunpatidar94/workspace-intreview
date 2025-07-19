@@ -21,7 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/account/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 @Validated
 @Tag(name = "CURD Rest Services for Account in SunBank", description = "This account rest microservice is responsible for UPDATE,DELETE,GET,POST services with respective ACCOUNTS ")
