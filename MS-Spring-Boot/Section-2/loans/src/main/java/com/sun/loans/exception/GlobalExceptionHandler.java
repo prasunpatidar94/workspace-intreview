@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({ResourceAlreadyExistsException.class,InvalidArgumentPassedException.class})
+    @ExceptionHandler({ResourceAlreadyExistsException.class,InvalidArgumentPassedException.class })
     public ResponseEntity<ErrorResponseDto> handleConflictExceptions(ResourceAlreadyExistsException resourceAlreadyExistsException, WebRequest webRequest ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ErrorResponseDto.builder()
@@ -23,4 +23,17 @@ public class GlobalExceptionHandler {
                         .build()
         );
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleConflictExceptions(ResourceNotFoundException resourceNotFoundException, WebRequest webRequest ) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ErrorResponseDto.builder()
+                        .errorSms(resourceNotFoundException.getMessage())
+                        .apiPath(webRequest.getDescription(false))
+                        .errorTime(LocalDateTime.now())
+                        .errorCode(HttpStatus.BAD_REQUEST)
+                        .build()
+        );
+    }
+
 }

@@ -5,21 +5,16 @@ spring:
     name: accounts
 
   datasource:
-    url: jdbc:h2:mem:hdfc  # or jdbc:h2:file:./data/testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console       # Access via http://localhost:8080/h2-console
+    url: jdbc:mysql://localhost:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true
+    username: user
+    password: pass123
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update          # Disable Hibernate DDL generation if using schema.sql
+      ddl-auto: update
     show-sql: true
-
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   sql:
     init:
       mode: always            # Options: always, embedded, never
@@ -30,30 +25,4 @@ spring:
       # swagger-ui custom path
 #springdoc:
 #  swagger-ui.path: /account-api-doc.html
-
-
-#  datasource:
-#    url: jdbc:h1:mem:testdb
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#    initialization-mode: always
-#
-#  h2:
-#    console:
-#      enable: true
-#      path: /h2-console
-#  jpa:
-#    hibernate:
-#      ddl-auto: none
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format-sql: true
-#  sql:
-#    init:
-#      mode: always           # Options: always, never, embedded
-#      schema-locations: classpath:schema.sql
-#      data-locations: classpath:data.sql
-#      continue-on-error: false
 

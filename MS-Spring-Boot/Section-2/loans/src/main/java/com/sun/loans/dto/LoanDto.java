@@ -1,16 +1,27 @@
 package com.sun.loans.dto;
 
 
+import com.sun.loans.enums.LoanType;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 @Getter
+@Schema(name = "Loan", description = "This Schema Hold Loan Details")
 public class LoanDto {
 
+    @Schema(description = "Mobile Number of the Customer", example = "9876543210")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digit with valid value ..!")
     private  String mobileNumber;
+    @Schema(description = "Loan Number of the Loan" ,example = "LN1001")
     private  String loanNumber;
+    @Schema(description = "Type of Loan" ,example = "CAR_LOAN")
     private  String loanType;
+    @Schema(description = "Total Amount of Loan" ,example = "199465.976")
     private  Double totalLoanAmount;
+    @Schema(description = "Paid Amount of Loan" ,example = "19895.976")
     private  Double paidAmount;
+    @Schema(description = "Paid Amount of Loan" ,example = "99465.976")
     private  Double outstandingAmount;
 
     public  LoanDto(){}
@@ -50,6 +61,7 @@ public class LoanDto {
             this.totalLoanAmount = totalLoanAmount;
             return this;
         }
+
 
         public Builder paidAmount(Double paidAmount) {
             this.paidAmount = paidAmount;

@@ -1,14 +1,14 @@
-CREATE TABLE IF NOT EXISTS `loans` (
-    `loan_id` int NOT NULL AUTO_INCREMENT,
-    `mobile_number` varchar(15) NOT NULL,
-    `loan_number` varchar(100) NOT NULL,
-    `loan_type` varchar(100) NOT NULL,
-    `total_loan` int NOT NULL,
-    `amount_paid` int NOT NULL,
-    `outstanding_amount` int NOT NULL,
-    `created_at` date NOT NULL,
-    `created_by` varchar(20) NOT NULL,
-    `updated_at` date DEFAULT NULL,
-    `updated_by` varchar(20) DEFAULT NULL,
-    PRIMARY KEY (`loan_id`)
-    );
+CREATE TABLE IF NOT EXISTS loan
+(
+    loan_id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    created_by         VARCHAR(100),
+    created_at         DATETIME,
+    updated_by         VARCHAR(100),
+    updated_at         DATETIME,
+    mobile_number      VARCHAR(20),
+    loan_number        VARCHAR(50),
+    loan_type          VARCHAR(50),
+    total_loan_amount  DOUBLE,
+    paid_amount        DOUBLE,
+    outstanding_amount DOUBLE
+);
