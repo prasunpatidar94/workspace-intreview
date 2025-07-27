@@ -1,14 +1,13 @@
-package com.sun.loans.constant;
 
-public class LoansConstants {
+package com.sun.card.constant;
+
+public class CardsConstants {
 
     public static final String SAVINGS = "SAVINGS";
-    public static final String ADMIN = "Admin";
-    public static final String USER = "User";
     public static final String CURRENT = "CURRENT";
     public static final String ADDRESS = "ND Kasrawad, District Khargone, MP, INDIA";
     public static final String STATUS_201 = "201";
-    public static final String MESSAGE_201 = "Loan created successfully";
+    public static final String MESSAGE_201 = "Account created successfully";
     public static final String STATUS_200 = "200";
     public static final String MESSAGE_200 = "Request processed successfully";
     public static final String STATUS_500 = "500";
@@ -16,7 +15,7 @@ public class LoansConstants {
     public static final String STATUS_417 = "417";
     public static final String MESSAGE_417_DELETE = "An Expectation occurred in Deletion. Please try again or contact Dev Team";
     public static final String MESSAGE_417_UPDATE = "An Expectation occurred in Update. Please try again or contact Dev Team";
-    private LoansConstants() {
+    private CardsConstants() {
         // Strict to object creation or initialization
     }
 

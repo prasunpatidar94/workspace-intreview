@@ -1,6 +1,5 @@
-package com.sun.loans.dto;
+package com.sun.card.dto;
 
-import com.sun.loans.constant.LoansConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

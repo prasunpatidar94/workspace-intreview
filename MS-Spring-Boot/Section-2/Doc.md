@@ -1,5 +1,15 @@
+# Section-2
+URL:-
+https://github.com/eazybytes/microservices/tree/3.4.1/section2
+## Port Details 
+- #### Account Port: 8080
+- #### Loan Port:8081
+- #### Cards: 8081
+
 #### Swagger URI	
+
 ```http://localhost:8080/swagger-ui/index.html```
+```http://localhost:8081/swagger-ui/index.html```
 
 ``` C:\Users\Someone\AppData\Roaming\JetBrains\IntelliJIdea2025.1\options\proxy```
 --
@@ -33,4 +43,13 @@ select * from sunbank.loan;
 select * from sunbank.customer;
 select * from sunbank.accounts;
 ```
+
+## resizing attaches (approach to divide work in small pieces)
+- domain driven design
+- event driven design
+
+## Strangler fig pattern 
+- best to migrate from one big complex legacy application to microservices 
+- identification -> transformation-> co-existence -> elimination
+
 

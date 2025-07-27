@@ -1,4 +1,4 @@
-package com.sun.loans;
+package com.sun.card;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -9,12 +9,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
- // to enable jpa auditing with or custom configuration
+@SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
 @OpenAPIDefinition(
 		info = @Info(
-				title = "Loan Microservice Rest API Documentation",
-				description = "SunBank Loan Microservice Rest API Documentation",
+				title = "Card Microservice Rest API Documentation",
+				description = "SunBank Card Microservice Rest API Documentation",
 				version = "v1",
 				contact = @Contact(
 						name = "Prasun Patidar",
@@ -27,15 +27,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 				)
 		),
 		externalDocs = @ExternalDocumentation(
-				description = "SunBank Loan Microservices Rest API Documentation",
+				description = "SunBank Card Microservices Rest API Documentation",
 				url = "https://sunbank.com/details"
 		)
 )
-@SpringBootApplication
-public class LoansApplication {
+public class CardsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LoansApplication.class, args);
+		SpringApplication.run(CardsApplication.class, args);
 	}
 
 }

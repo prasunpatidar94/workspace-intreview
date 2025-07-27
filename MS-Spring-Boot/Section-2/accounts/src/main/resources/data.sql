@@ -1,31 +1,31 @@
-INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
-SELECT * FROM (
-                  SELECT 'John Doe', 'john.doe@example.com', '1234567890', NOW(), 'admin'
-              ) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM sunbank.customer WHERE email = 'john.doe@example.com'
-);
-
-INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
-SELECT * FROM (
-                  SELECT 'Alice Smith', 'alice.smith@example.com', '9876543210', NOW(), 'admin'
-              ) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM sunbank.customer WHERE email = 'alice.smith@example.com'
-);
-
-INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
-SELECT * FROM (
-                  SELECT 'Bob Johnson', 'bob.johnson@example.com', '5551234567', NOW(), 'admin'
-              ) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM sunbank.customer WHERE email = 'bob.johnson@example.com'
-);
-
-
-
-
-
+# INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
+# SELECT * FROM (
+#                   SELECT 'John Doe', 'john.doe@example.com', '1234567890', NOW(), 'admin'
+#               ) AS tmp
+# WHERE NOT EXISTS (
+#     SELECT 1 FROM sunbank.customer WHERE email = 'john.doe@example.com'
+# );
+#
+# INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
+# SELECT * FROM (
+#                   SELECT 'Alice Smith', 'alice.smith@example.com', '9876543210', NOW(), 'admin'
+#               ) AS tmp
+# WHERE NOT EXISTS (
+#     SELECT 1 FROM sunbank.customer WHERE email = 'alice.smith@example.com'
+# );
+#
+# INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
+# SELECT * FROM (
+#                   SELECT 'Bob Johnson', 'bob.johnson@example.com', '5551234567', NOW(), 'admin'
+#               ) AS tmp
+# WHERE NOT EXISTS (
+#     SELECT 1 FROM sunbank.customer WHERE email = 'bob.johnson@example.com'
+# );
+#
+#
+#
+#
+#
 # -- Insert default customers
 # INSERT INTO sunbank.customer (name, email, mobile_number, created_at, created_by)
 # VALUES
