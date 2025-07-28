@@ -52,4 +52,8 @@ select * from sunbank.accounts;
 - best to migrate from one big complex legacy application to microservices 
 - identification -> transformation-> co-existence -> elimination
 
+## Challenge #3 (deployment, scalability, Portability)
+- solution id containerization (with docker and kubernetes)
+- 
+
 

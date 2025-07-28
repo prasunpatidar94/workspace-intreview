@@ -33,7 +33,7 @@ public class CardsServiceImpl implements ICardsService {
     public boolean updateCard(CardsDto cardsDto) {
         Optional<Cards> loanOptional = cardsRepository.findByCardNumber(cardsDto.getCardNumber());
         Cards cards = loanOptional.orElseThrow(() -> new ResourceNotFoundException("Cards", "cardNumber", cardsDto.getCardNumber()));
-
+        cardsDto.setAvailableAmount(cardsDto.getTotalLimit()-cardsDto.getAmountUsed());
         cardsRepository.save(CardsMapper.mapLoadDtoToLoan(cardsDto, cards));
         return true;
     }
