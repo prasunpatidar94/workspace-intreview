@@ -1,0 +1,29 @@
+services:
+  accounts:
+    build:
+      context: ./loans
+      args:
+        MAVEN_SKIP_TESTS: "-x test"
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  sql:
+    init:
+      mode: always            # Options: always, embedded, never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: false
+
+      # swagger-ui custom path
+      #springdoc:
+      #  swagger-ui.path: /account-api-doc.html
