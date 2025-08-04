@@ -147,6 +147,7 @@ from sunbank.accounts;
             gradel build OR gradel build --warning-mode=all
             gradle jib ---> build image and push on image repogitory
             gradle jibDockerBuild ---> to build image local docker
+            gradle clean compileJava build jibDockerBuild -x test
         ```
       - jib builder with maven 
         ```xml
@@ -160,10 +161,11 @@ from sunbank.accounts;
                         </to>
                     </configuration>
             </plugin>
-      ```
+        ```
     - jib builder / fat jar builder command with mvn
         ```shell
             mvn clean  compile jib:dockerBuild -DskipTests
+            mvn clean compile install jib:dockerBuild -DskipTests
             mvn compile jib:build  -->registory push
         ```
     ## Docker commands:
