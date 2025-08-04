@@ -185,8 +185,8 @@ from sunbank.accounts;
 - to Build batter MS Project.
 - create by Heroko (with 12 principal) 
 - Updated by Kevin Hoffman  with 3 principal now total is 15 principal
-#### 1. One code base for one application (means each application should have its own code repo.)
-#### 2. API first (always focus on API implementation and integration)
-#### 3. Dependency management (always get dependency form centralize place Maven and Gradle is best tool to do it )
-#### 4. design->build->release->run (always create production ready application run it and if any correctio come it fix it and flow same process )
-#### 5. Configuration Credentials and Code ( keep app env related config repeated and enable as par the requirements server )
+#### 1. One code base for one application - use git repo (means each application should have its own code repo.)
+#### 2. API first- use Sping boot rest API (always focus on API implementation and integration)
+#### 3. Dependency management use maven / Gradle (always get dependency form centralize place Maven and Gradle is best tool to do it )
+#### 4. design->build->release->run use jenkins/ git actions (always create production ready application run it and if any correctio come it fix it and flow same process )
+#### 5. Configuration Credentials and Code use Sping server config with spring profile ( keep app env related config repeated and enable as par the requirements server )
