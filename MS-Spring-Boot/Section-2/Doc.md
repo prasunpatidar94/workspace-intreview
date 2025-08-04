@@ -48,12 +48,12 @@ https://github.com/eazybytes/microservices/tree/3.4.1/section2
 #### SQL Database / Tables
 
 ```sql
-select *
-from sunbank.loan;
-select *
-from sunbank.customer;
-select *
-from sunbank.accounts;
+    select *
+    from sunbank.loan;
+    select *
+    from sunbank.customer;
+    select *
+    from sunbank.accounts;
 ```
 
 ## resizing attaches (approach to divide work in small pieces)
