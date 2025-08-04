@@ -134,7 +134,7 @@ from sunbank.accounts;
         id 'java'
         id 'org.springframework.boot' version '3.5.4'
         id 'io.spring.dependency-management' version '1.1.7'
-        id 'com.google.cloud.tools.jib' version '3.4.5' ---> jib plugin
+        id 'com.google.cloud.tools.jib' version '3.4.5' /---  jib plugin
         
         }
         
@@ -180,19 +180,13 @@ from sunbank.accounts;
       docker container stop codebysun/loans:v1
       docker container prone codebysun/loans:v1
       docker image rm codebysun/loans:v1
-      
-      
-        
       ```
-  
-        
-            
-    
-      
-      
-        
-          
-
-
-
-
+## 15-Factor Methodology -:
+- to Build batter MS Project.
+- create by Heroko (with 12 principal) 
+- Updated by Kevin Hoffman  with 3 principal now total is 15 principal
+#### 1. One code base for one application (means each application should have its own code repo.)
+#### 2. API first (always focus on API implementation and integration)
+#### 3. Dependency management (always get dependency form centralize place Maven and Gradle is best tool to do it )
+#### 4. design->build->release->run (always create production ready application run it and if any correctio come it fix it and flow same process )
+#### 5. Configuration Credentials and Code ( keep app env related config repeated and enable as par the requirements server )
