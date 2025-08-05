@@ -183,10 +183,20 @@ https://github.com/eazybytes/microservices/tree/3.4.1/section2
       ```
 ## 15-Factor Methodology -:
 - to Build batter MS Project.
-- create by Heroko (with 12 principal) 
-- Updated by Kevin Hoffman  with 3 principal now total is 15 principal
+- created by Heroku (with principal 12) 
+- Updated by Kevin Hoffman with principal 3 now totals are 15 principal
 #### 1. One code base for one application - use git repo (means each application should have its own code repo.)
 #### 2. API first- use Sping boot rest API (always focus on API implementation and integration)
-#### 3. Dependency management use maven / Gradle (always get dependency form centralize place Maven and Gradle is best tool to do it )
+#### 3. Dependency management use maven / Gradle (always get a dependency form centralize place Maven and Gradle is best tool to do it )
 #### 4. design->build->release->run use jenkins/ git actions (always create production ready application run it and if any correctio come it fix it and flow same process )
-#### 5. Configuration Credentials and Code use Sping server config with spring profile ( keep app env related config repeated and enable as par the requirements server )
+#### 5. Configuration Credentials and Code use Sping server config with spring profile (keep app env related config repeated and enable as par the requirements server )
+#### 6. Logs use logs aggregator tool (always make logging tool or mechanizing with MS)
+#### 7. Disposability use docker or Kubernetes (if npt working the kill it and create new instance)
+#### 8. Backing Services use config server and properties setup (make all attached resource things like DB Queues should be as a service so we can do modification easily without chages)
+#### 9. Environment Parity to avoid costly shortcut (if the configuration is similar for 2 enviroment and not much diffrence the keep only minimal diffrences and run application )
+#### 10. Administrative Process (folow process like SIT->UAT-PROD with same data and make it same packages )
+#### 11. Port Finding use port for forwarding used intercommunication (do not deploy multiply application in same server batter we have to used separate server fo0r each application )
+#### 12. Stateless Processes use Caching concept or DB  (do not used any service as data store instence of it we should use redis chase or DB ,do not make  dependency tight coupling other )
+#### 13. Concurrency use horizontal scaling  using threading concept (should support concurrency not sequencing)
+#### 14. Telemetry use actuator  ,admin console , logs, tracings, health states, etc. (always used observability tool to observe the all service on signal place to monitor)
+#### 15. Authentication and authorization use spring security (zero trust approach)
