@@ -186,7 +186,7 @@ https://github.com/eazybytes/microservices/tree/3.4.1/section2
 - created by Heroku (with principal 12) 
 - Updated by Kevin Hoffman with principal 3 now totals are 15 principal
 #### 1. One code base for one application - use git repo (means each application should have its own code repo.)
-#### 2. API first- use Sping boot rest API (always focus on API implementation and integration)
+#### 2. API first-use Sping boot rest API (always focus on API implementation and integration)
 #### 3. Dependency management use maven / Gradle (always get a dependency form centralize place Maven and Gradle is best tool to do it )
 #### 4. design->build->release->run use jenkins/ git actions (always create production ready application run it and if any correctio come it fix it and flow same process )
 #### 5. Configuration Credentials and Code use Sping server config with spring profile (keep app env related config repeated and enable as par the requirements server )
@@ -200,3 +200,10 @@ https://github.com/eazybytes/microservices/tree/3.4.1/section2
 #### 13. Concurrency use horizontal scaling using threading concept (should support concurrency not sequencing)
 #### 14. Telemetry uses actuator, admin console, logs, tracings, health states, etc. (always used observability tool to observe the all service on signal place to monitor)
 #### 15. Authentication and authorization use spring security (zero trust approach)
+
+# Need of Configuration
+- To make All Environment Friendly Application 
+##  There are 3 Approaches to achieve dynamic configuration: -
+- 1. Configuration Spring boot with properties and profiles
+- 2. Applying external Configuration with Spring Boot
+- 3. Implimenting a configuration server with spring cloud config server
