@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   profiles:
-    active: docker
+    active: local
   application:
     name: accounts
 
@@ -11,3 +11,14 @@ management:
     web:
       exposure:
         include: "*"
+build:
+  version: "1.0 V"
+
+accounts:
+  massage: "Welcome In SunBank ...!"
+  contactDetails:
+    name: "Prasun Patidar"
+    email: "codebysun@gmail.com"
+  onCallSupport:
+    - 88888-88888
+    - 99999-99999

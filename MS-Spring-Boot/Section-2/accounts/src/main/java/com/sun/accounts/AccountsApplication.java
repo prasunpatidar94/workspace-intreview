@@ -1,5 +1,6 @@
 package com.sun.accounts;
 
+import com.sun.accounts.dto.AccountContactInfoDetailsDto;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
@@ -14,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 //@ComponentScans({@ComponentScan("com.pp.sun.controller")})
 //@EnableJpaRepositories("com.pp.repo")
 //@EntityScan("com.pp.entity")
+@EnableConfigurationProperties(value = AccountContactInfoDetailsDto.class)
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")  // to enable jpa auditing with or custom configuration
 @OpenAPIDefinition(
         info = @Info(

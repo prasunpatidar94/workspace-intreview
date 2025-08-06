@@ -1,4 +1,3 @@
-
 ---
 
 ```markdown
@@ -9,8 +8,8 @@
 
 ## 🛠️ Port Configuration
 
-- **Account Service Port**: `8080`  
-- **Loan Service Port**: `8081`  
+- **Account Service Port**: `8080`
+- **Loan Service Port**: `8081`
 - **Cards Service Port**: `8081`
 
 ### 🧭 Swagger URLs
@@ -21,6 +20,7 @@ http://localhost:8081/swagger-ui/index.html
 ```
 
 📍 IntelliJ Proxy Settings:
+
 ```text
 C:\Users\Someone\AppData\Roaming\JetBrains\IntelliJIdea2025.1\options\proxy
 ```
@@ -67,9 +67,12 @@ volumes:
 ## 🗃️ SQL Queries
 
 ```sql
-SELECT * FROM sunbank.loan;
-SELECT * FROM sunbank.customer;
-SELECT * FROM sunbank.accounts;
+SELECT *
+FROM sunbank.loan;
+SELECT *
+FROM sunbank.customer;
+SELECT *
+FROM sunbank.accounts;
 ```
 
 ---
@@ -129,8 +132,8 @@ java -jar <JAR_NAME>.jar
 
 ```groovy
 bootBuildImage {
-  imageName = "codebysun/${rootProject.name}:v1"
-  environment = ['BP_JVM_VERSION': '17']
+    imageName = "codebysun/${rootProject.name}:v1"
+    environment = ['BP_JVM_VERSION': '17']
 }
 ```
 
@@ -141,10 +144,11 @@ gradle bootBuildImage
 #### Maven
 
 ```xml
+
 <configuration>
-  <image>
-    <name>sun/sunbank:latest</name>
-  </image>
+    <image>
+        <name>sun/sunbank:latest</name>
+    </image>
 </configuration>
 ```
 
@@ -160,10 +164,10 @@ mvn spring-boot:build-image
 
 ```groovy
 plugins {
-  id 'java'
-  id 'org.springframework.boot' version '3.5.4'
-  id 'io.spring.dependency-management' version '1.1.7'
-  id 'com.google.cloud.tools.jib' version '3.4.5'
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.cloud.tools.jib' version '3.4.5'
 }
 
 jib.to.image = "codebysun/${rootProject.name}:v1"
@@ -179,15 +183,16 @@ gradle jibDockerBuild
 #### Maven
 
 ```xml
+
 <plugin>
-  <groupId>com.google.cloud.tools</groupId>
-  <artifactId>jib-maven-plugin</artifactId>
-  <version>3.4.6</version>
-  <configuration>
-    <to>
-      <image>codebysun/accounts:latest</image>
-    </to>
-  </configuration>
+    <groupId>com.google.cloud.tools</groupId>
+    <artifactId>jib-maven-plugin</artifactId>
+    <version>3.4.6</version>
+    <configuration>
+        <to>
+            <image>codebysun/accounts:latest</image>
+        </to>
+    </configuration>
 </plugin>
 ```
 
@@ -244,34 +249,34 @@ To make your Spring Boot app adaptable across environments:
 
 ### 🧾 Spring Boot Configuration Priority Order (higher to lower)
 
-| No | Configuration Source                             |
-|----|--------------------------------------------------|
-| 1  | Command Line Arguments                           |
-| 2  | `ServletConfig` init Parameters                  |
-| 3  | `ServletContext` init Parameters                 |
-| 4  | JNDI attributes from `java:comp/env`             |
-| 5  | Java System Properties (`System.getProperties()`)|
-| 6  | OS Environment Variables                         |
-| 7  | `application.properties` file                    |
+| No | Configuration Source                              |
+|----|---------------------------------------------------|
+| 1  | Command Line Arguments                            |
+| 2  | `ServletConfig` init Parameters                   |
+| 3  | `ServletContext` init Parameters                  |
+| 4  | JNDI attributes from `java:comp/env`              |
+| 5  | Java System Properties (`System.getProperties()`) |
+| 6  | OS Environment Variables                          |
+| 7  | `application.properties` file                     |
 
-### we will cover merger 3 used approached 
+### we will cover merger 3 used approached
+
 ### 📊 Configuration Approaches in Spring Boot
 
-| No | Approach                     | Example                                                                                                        | Drawbacks                                                                                           |
-|----|------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| 1  | `@Value` Annotation          | `@Value("${server.port}")`<br>Injects single property directly into a field                                   | ❌ Hard to manage multiple related properties<br>❌ No support for complex object binding             |
-| 2  | `Environment` Class          | `env.getProperty("spring.datasource.url")`<br>Use inside constructor or method to fetch property dynamically  | ❌ Not type-safe<br>❌ Needs manual conversion and default handling                                   |
-| 3  | `@ConfigurationProperties`   | `@ConfigurationProperties(prefix = "app")`<br>Maps `app.*` properties into a POJO                            | ❌ Requires getter/setter<br>❌ Needs class to be annotated with `@Component` or registered manually |
-
+| No | Approach                   | Example                                                                                                      | Benefits                                                                                              | Drawbacks                                                                                              | Use Case                                                                                                |
+|----|----------------------------|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| 1  | `@Value` Annotation        | `@Value("${server.port}")`<br>Injects single property directly into a field                                  | ✅ Simple and quick for individual values<br>✅ Easy for primitive types                                | ❌ Hard to manage multiple related properties<br>❌ No support for complex object binding                | 🔹 Ideal for injecting isolated primitive values like ports, flags, or single strings                   |
+| 2  | `Environment` Interface    | `env.getProperty("spring.datasource.url")`<br>Use inside constructor or method to fetch property dynamically | ✅ Runtime flexibility<br>✅ Can set default values via code<br>✅ Doesn't require annotations           | ❌ Not type-safe<br>❌ Needs manual conversion and error handling<br>❌ Verbose for grouped configs       | 🔹 Suitable for dynamic access, utility components, or custom config loaders with conditional logic     |
+| 3  | `@ConfigurationProperties` | `@ConfigurationProperties(prefix = "app")`<br>Maps `app.*` properties into a POJO                            | ✅ Type-safe and object-mapped<br>✅ Clean separation of config logic<br>✅ Excellent for grouped values | ❌ Requires boilerplate (getters/setters)<br>❌ Needs proper component scanning or explicit registration | 🔹 Best for structured config objects (e.g., credentials, service URLs, thresholds) used across the app |
 
 ### 🔍 Quick Comparison
 
-| Feature                         | `@Value`               | `Environment`            | `@ConfigurationProperties`        |
-|---------------------------------|------------------------|---------------------------|------------------------------------|
-| ✅ Type-safety                  | ❌ No                  | ❌ No                      | ✅ Yes                             |
-| ✅ Complex object mapping       | ❌ No                  | ❌ No                      | ✅ Yes                             |
-| ✅ Ease of testing              | ❌ Hardcoded values     | ⚠️ Requires mocking        | ✅ Clean POJOs                     |
-| ✅ Spring Boot friendly         | ✅ Simple usage         | ⚠️ Utility-based access     | ✅ Highly recommended              |
+| Feature                  | `@Value`           | `Environment`           | `@ConfigurationProperties` |
+|--------------------------|--------------------|-------------------------|----------------------------|
+| ✅ Type-safety            | ❌ No               | ❌ No                    | ✅ Yes                      |
+| ✅ Complex object mapping | ❌ No               | ❌ No                    | ✅ Yes                      |
+| ✅ Ease of testing        | ❌ Hardcoded values | ⚠️ Requires mocking     | ✅ Clean POJOs              |
+| ✅ Spring Boot friendly   | ✅ Simple usage     | ⚠️ Utility-based access | ✅ Highly recommended       |
 
 ---
 
@@ -284,11 +289,44 @@ spring.datasource.url=jdbc:mysql://localhost:3306/mydb
 app.name=SunBank
 app.version=1.0
 ```
+
 ---
 
 ### 🧾 Example POJO for `@ConfigurationProperties`
 
 ```java
+//'main class of application '
+@EnableConfigurationProperties(value = AccountContactInfoDetailsDto.class)
+public class AccountsApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(AccountsApplication.class, args);
+  }
+//----------------------
+}
+
+
+import java.util.List;
+import java.util.Map;
+
+@ConfigurationProperties(prefix = "accounts")
+public record AccountContactInfoDetailsDto(String massage, Map<String, String> contactDetails,
+                                           List<String> onCallSupport) {
+
+}
+
+
+//
+//accounts:
+//    massage: "Welcome In SunBank ...!"
+//    contactDetails:
+//        name: "Prasun Patidar"
+//        email: "codebysun@gmail.com"
+//    onCallSupport:
+//            - 88888-88888
+//            - 99999-99999
+//--------------
+//OR
 @Component
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
@@ -298,15 +336,34 @@ public class AppConfig {
     // Getters and Setters
 }
 ```
-### 🧪 Configuration Examples in Context  
+
+### 🧪 Configuration Examples in Context
 
 ```properties
-application.properties server.port=8080 
+application.properties=server.port=8080 
 spring.datasource.url=jdbc:mysql://localhost:3306/mydb 
 app.name=SunBank app.version=1.0
 ```
-✅ Example: @Value
+
+###  ✅ Example: @Value
+
 ```java 
+import org.springframework.beans.factory.annotation.Value;
+
 @Value("${app.name}")
 private String appName;
 ```
+
+###  ✅ Example:  Environment Interface
+
+```java 
+import org.springframework.core.env.Environment;
+
+@Autowired
+private Environment environment;
+
+public String acctHealth() {
+    return " Java-version : " + environment.getProperty("java.version");
+}
+```
+
