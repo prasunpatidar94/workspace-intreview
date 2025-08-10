@@ -22,6 +22,25 @@ WHERE NOT EXISTS (
     SELECT 1 FROM sunbank.customer WHERE email = 'bob.johnson@example.com'
 );
 
+# INSERT INTO accounts (customer_id, account_type, branch_address, created_at, created_by)
+# SELECT * FROM (
+#                   SELECT 1, 'Savings', '123 Main St, NY', NOW(), 'admin'
+#                   UNION ALL
+#                   SELECT 1, 'Checking', '123 Main St, NY', NOW(), 'admin'
+#                   UNION ALL
+#                   SELECT 2, 'Savings', '456 Elm St, CA', NOW(), 'admin'
+#                   UNION ALL
+#                   SELECT 3, 'Current', '789 Oak St, TX', NOW(), 'admin'
+#               ) AS new_accounts
+# WHERE NOT EXISTS (
+#     SELECT 1 FROM accounts a
+#     WHERE a.customer_id = new_accounts.customer_id
+#       AND a.account_type = new_accounts.account_type
+#       AND a.branch_address = new_accounts.branch_address
+# );
+
+
+
 #
 #
 #

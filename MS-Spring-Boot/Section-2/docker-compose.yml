@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_DATABASE: sunbank
       MYSQL_USER: user
-      MYSQL_PASSWORD: pass123
+      MYSQL_PASSWORD: docker123
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
@@ -31,7 +31,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass123
+      SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
       - spring-app-mysql-net
@@ -47,7 +47,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass123
+      SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
       - spring-app-mysql-net
@@ -63,7 +63,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass123
+      SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
       - spring-app-mysql-net

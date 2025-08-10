@@ -30,13 +30,7 @@ C:\Users\Someone\AppData\Roaming\JetBrains\IntelliJIdea2025.1\options\proxy
 ## 🐬 Docker MySQL Container Setup
 
 ```bash
-docker run --name mysql-container \
--e MYSQL_ROOT_PASSWORD=rootpass \
--e MYSQL_DATABASE=sunbank \
--e MYSQL_USER=user \
--e MYSQL_PASSWORD=pass123 \
--p 3306:3306 \
--d mysql:8.0
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=rootpass -e MYSQL_DATABASE=sunbank -e MYSQL_USER=user -e MYSQL_PASSWORD=pass123 -p 3306:3306 -d mysql:8.0
 ```
 
 ### 📦 docker-compose.yaml
@@ -302,9 +296,7 @@ public class AccountsApplication {
   public static void main(String[] args) {
     SpringApplication.run(AccountsApplication.class, args);
   }
-//----------------------
 }
-
 
 import java.util.List;
 import java.util.Map;
@@ -366,4 +358,81 @@ public String acctHealth() {
     return " Java-version : " + environment.getProperty("java.version");
 }
 ```
+
+## Provide  configuration form externally 
+### some time we have not proper poisoning to edit the default application properties file before the run and build application, in this case, we can pass the configuration properties form externally.
+### There are some common approches: -
+
+#### 1. Command Line Approach (higher priority ):
+```shell
+java -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar --spring.profiles.active="local"
+```
+#### 2. JVM / JAVA system properties (second most priority):
+```shell
+#For Run
+java -Dspring.profiles.active=docker -DskipTests -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar
+#For Build
+mvn clean compile install jib:dockerBuild -Dspring.profiles.active=docker -DskipTests 
+```
+#### 3. Environment Variables (3rd most priority / Mostly used approach):
+- java based config : 
+  - ```java
+    //    First  method 
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.core.env.Environment;
+      import org.springframework.stereotype.Component;
+      import jakarta.annotation.PostConstruct;
+      
+      @Component
+      public class EnvConfig {
+      
+          @Autowired
+          private Environment env;
+      
+          @PostConstruct
+          public void init() {
+              String dbUrl = env.getProperty("SPRING_DATASOURCE_URL", "jdbc:mysql://localhost:3306/defaultdb");
+              String dbUser = env.getProperty("SPRING_DATASOURCE_USERNAME", "defaultUser");
+              String dbPass = env.getProperty("SPRING_DATASOURCE_PASSWORD", "defaultPass");
+      
+              System.out.println("DB URL: " + dbUrl);
+              System.out.println("DB User: " + dbUser);
+              System.out.println("DB Pass: " + dbPass);
+          }
+      }
+    
+      // Second Method 
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.core.env.Environment;
+      import org.springframework.stereotype.Component;
+      
+      import jakarta.annotation.PostConstruct;
+      
+      @Component
+      public class EnvConfig {
+      
+          @Autowired
+          private Environment env;
+      
+          @PostConstruct
+          public void init() {
+              String dbUrl = env.getProperty("SPRING_DATASOURCE_URL", "jdbc:mysql://localhost:3306/defaultdb");
+              String dbUser = env.getProperty("SPRING_DATASOURCE_USERNAME", "defaultUser");
+              String dbPass = env.getProperty("SPRING_DATASOURCE_PASSWORD", "defaultPass");
+      
+              System.out.println("DB URL: " + dbUrl);
+              System.out.println("DB User: " + dbUser);
+              System.out.println("DB Pass: " + dbPass);
+          }
+      }   
+    ``` 
+  - Provide in command :
+    ```shell
+    #In Windows:
+     env:SPRING_PROFILES_ACTIVE="local;java -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar
+    
+    #In unix/linux:
+     SPRING_PROFILES_ACTIVE="local;java -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar
+    ```
+
 
