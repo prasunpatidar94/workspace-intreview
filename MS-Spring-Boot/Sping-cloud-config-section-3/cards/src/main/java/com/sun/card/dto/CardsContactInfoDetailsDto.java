@@ -14,7 +14,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "cards")
 public class CardsContactInfoDetailsDto {
 
-    private String message;
+    private String massage;
     private Map<String, String> contactDetails;
     private List<String> onCallSupport;
 }

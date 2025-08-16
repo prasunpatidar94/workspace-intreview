@@ -5,12 +5,21 @@ spring:
   application:
     name: configserver
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
         git:
-          uri: ""
+          uri: "https://github.com/prasunpatidar94/workspace-intreview.git"
+          force-pull: true
+          timeout: 5
+          search-paths: "MS-Spring-Boot/Sping-cloud-config-section-3/configserver/src/main/resources/config"
+          default-label: "main"
+          clone-on-start: true
+#          clone-on-start: true
 #        native:
 #          search-locations: "classpath:/config"
 #          search-locations: "file:///D:/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/configserver/src/main/resources/config"
+encrypt:
+  key: "a3f5e9c2b1d4f6e7c8a9bt3k52764tb5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1"
+#  http://localhost:8071/encryptv -- POST method get encrypted data
