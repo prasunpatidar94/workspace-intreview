@@ -11,7 +11,7 @@ cards:
   massage: "Welcome In SunBank Cards Application with Docker configuration..!"
   contactDetails:
     name: "Prasun Patidar"
-    email: "codebysun@gmail.com"
+    email: "{cipher}7e5f115446a084a43d93e9a9f5654f04ff14d1960ef705048348de9769d50c1e8695b0855a6797116a1f4d587685fe43"
   onCallSupport:
     - 11111-11111
     - 77777-77777
