@@ -16,3 +16,5 @@ accounts:
   onCallSupport:
     - 22222-22222
     - 66666-44444
+
+  #  http://localhost:8080/actuator/refresh --post

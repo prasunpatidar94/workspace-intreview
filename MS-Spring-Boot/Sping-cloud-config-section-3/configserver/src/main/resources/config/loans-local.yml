@@ -16,3 +16,4 @@ loans:
   onCallSupport:
     - 22222-22222
     - 66666-44444
+#  http://localhost:8081/actuator/refresh --post
