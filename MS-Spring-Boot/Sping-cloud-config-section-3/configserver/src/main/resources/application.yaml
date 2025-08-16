@@ -1,3 +1,16 @@
+server:
+  port: 8071
+
 spring:
   application:
     name: configserver
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        git:
+          uri: ""
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///D:/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/configserver/src/main/resources/config"

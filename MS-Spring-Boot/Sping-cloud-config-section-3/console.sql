@@ -3,9 +3,9 @@ select * from sunbank.customer;
 select * from sunbank.accounts;
 
 select * from sunbank.cards;
-
-
-drop table sunbank.loan;
+select * from sunbank.loans;
+#
+# drop table sunbank.loans;
 
 
 # drop table sunbank.loan;

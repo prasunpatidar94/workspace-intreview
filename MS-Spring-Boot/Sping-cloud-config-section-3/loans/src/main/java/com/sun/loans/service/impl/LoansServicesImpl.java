@@ -1,7 +1,7 @@
 package com.sun.loans.service.impl;
 
 import com.sun.loans.dto.LoanDto;
-import com.sun.loans.entity.Loan;
+import com.sun.loans.entity.Loans;
 import com.sun.loans.exception.InvalidArgumentPassedException;
 import com.sun.loans.exception.ResourceAlreadyExistsException;
 import com.sun.loans.exception.ResourceNotFoundException;
@@ -31,9 +31,9 @@ public class LoansServicesImpl implements ILoansServices {
 
     @Override
     public boolean updateLoan(LoanDto loanDto) {
-        Optional<Loan> loanOptional = loanRepository.findByLoanNumber(loanDto.getLoanNumber());
-        Loan loan = loanOptional.orElseThrow(() -> new ResourceNotFoundException("Loan", "loanNumber", loanDto.getLoanNumber()));
-        loanRepository.save(LoanMapper.mapLoadDtoToLoan(loanDto, loan));
+        Optional<Loans> loanOptional = loanRepository.findByLoanNumber(loanDto.getLoanNumber());
+        Loans loans = loanOptional.orElseThrow(() -> new ResourceNotFoundException("Loan", "loanNumber", loanDto.getLoanNumber()));
+        loanRepository.save(LoanMapper.mapLoadDtoToLoan(loanDto, loans));
         return true;
     }
 
@@ -62,20 +62,20 @@ public class LoansServicesImpl implements ILoansServices {
         if (findBy.equalsIgnoreCase("MOB")) {
             loanRepository.findByMobileNumber(findByValue).orElseThrow(() -> new ResourceNotFoundException("Loan", "mobileNumber", findByValue));
             loanRepository.deleteByMobileNumber(findByValue);
-            isDeleted= true;
+            isDeleted = true;
 
         } else if (findBy.equalsIgnoreCase("LN")) {
             loanRepository.findByLoanNumber(findByValue).orElseThrow(() -> new ResourceNotFoundException("Loan", "loanNumber", findByValue));
             loanRepository.deleteByMobileNumber(findByValue);
-            isDeleted= true;
+            isDeleted = true;
         } else {
             throw new InvalidArgumentPassedException("Loan", "mobileNumber/loanNumber", findByValue);
         }
         return isDeleted;
     }
 
-    private Loan createNewLoan(LoanDto loanDto) {
-        Loan loan = LoanMapper.mapLoadDtoToLoan(loanDto, new Loan());
+    private Loans createNewLoan(LoanDto loanDto) {
+        Loans loan = LoanMapper.mapLoadDtoToLoan(loanDto, new Loans());
         loan.setLoanNumber(createLoanNumber());
         return loan;
     }

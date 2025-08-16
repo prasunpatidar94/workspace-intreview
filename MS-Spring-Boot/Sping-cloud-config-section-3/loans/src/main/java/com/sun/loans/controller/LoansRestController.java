@@ -3,6 +3,7 @@ package com.sun.loans.controller;
 import com.sun.loans.constant.LoansConstants;
 import com.sun.loans.dto.ErrorResponseDto;
 import com.sun.loans.dto.LoanDto;
+import com.sun.loans.dto.LoansContactInfoDetailsDto;
 import com.sun.loans.dto.ResponseDto;
 import com.sun.loans.service.ILoansServices;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +26,27 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/loans/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
 @Tag(name = "Loan Microservice - (SunBank)", description = "Rest api for Loan microservice with all CURD operations ")
 @Validated
 public class LoansRestController {
+    private final Environment environment;
+    @Value("${build.version}")
+    private String buildVersion;
+    private final ILoansServices iLoansServices;
+    private final LoansContactInfoDetailsDto loansContactInfoDetailsDto;
 
-    private ILoansServices iLoansServices;
+    @Autowired
+    public LoansRestController(Environment environment, ILoansServices iLoansServices, LoansContactInfoDetailsDto loansContactInfoDetailsDto) {
+        this.environment = environment;
+        this.iLoansServices = iLoansServices;
+        this.loansContactInfoDetailsDto = loansContactInfoDetailsDto;
+    }
 
     @Operation(summary = "Loan Service Health Checker", description = "Rest Service to support to check  health for Loan Microservices")
     @ApiResponse(responseCode = "200", description = "Healthy")
     @GetMapping("/loans")
     public String health() {
-        return "Healthy";
+        return "Healthy Loans Application -  App version is : " + buildVersion + "   Java-version : " + environment.getProperty("java.version");
     }
 
     @Operation(summary = "Create Account Rest API", description = "Rest API to create account and customer in SunBank")
@@ -75,6 +88,11 @@ public class LoansRestController {
         return (iLoansServices.deleteByMobileOrLoanNumber(findByValue, findBy)) ?
                 ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200))
                 : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
+    }
+    @GetMapping("contact-info")
+    public ResponseEntity<LoansContactInfoDetailsDto> getiAccountServices() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDetailsDto);
     }
 
 

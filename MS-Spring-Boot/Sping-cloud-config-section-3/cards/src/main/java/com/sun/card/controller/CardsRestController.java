@@ -1,6 +1,7 @@
 package com.sun.card.controller;
 
 import com.sun.card.constant.CardsConstants;
+import com.sun.card.dto.CardsContactInfoDetailsDto;
 import com.sun.card.dto.CardsDto;
 import com.sun.card.dto.ErrorResponseDto;
 import com.sun.card.dto.ResponseDto;
@@ -13,9 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,25 +25,34 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/cards/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
 @Tag(name = "Cards Microservice - (SunBank)", description = "Rest api for Cards microservice with all CURD operations ")
 @Validated
 public class CardsRestController {
 
-@Autowired
-    private ICardsService iCardsService;
+    private final Environment environment;
+    @Value("${build.version}")
+    private  String buildVersion;
+    private final ICardsService iCardsService;
+    private final  CardsContactInfoDetailsDto cardsContactInfoDetailsDto;
+
+    @Autowired
+    public CardsRestController(Environment environment,  ICardsService iCardsService, CardsContactInfoDetailsDto cardsContactInfoDetailsDto) {
+        this.environment = environment;
+        this.iCardsService = iCardsService;
+        this.cardsContactInfoDetailsDto = cardsContactInfoDetailsDto;
+    }
 
     @Operation(summary = "Cards Service Health Checker", description = "Rest Service to support to check  health for Cards Microservices")
     @ApiResponse(responseCode = "200", description = "Healthy")
     @GetMapping("/cards")
     public String health() {
-        return "Healthy";
+        return "Healthy Cards Application -  App version is : " + buildVersion + "   Java-version : " + environment.getProperty("java.version");
     }
 
     @Operation(summary = "Create Account Rest API", description = "Rest API to create account and customer in SunBank")
     @ApiResponse(responseCode = CardsConstants.STATUS_201, description = CardsConstants.MESSAGE_201)
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> create(@Valid @RequestBody CardsDto cardsDto ) {
+    public ResponseEntity<ResponseDto> create(@Valid @RequestBody CardsDto cardsDto) {
 
         iCardsService.createCard(cardsDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.builder().StatusCode(CardsConstants.STATUS_201).StatusSms(CardsConstants.MESSAGE_201).build());
@@ -69,6 +79,11 @@ public class CardsRestController {
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteByMobileOrCardNumber(@NotEmpty(message = "findByValue should not be Empty") @RequestParam String findByValue, @NotEmpty(message = "findBy should not be Empty") @RequestParam String findBy) {
         return (iCardsService.deleteByMobileOrCardNumber(findByValue, findBy)) ? ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200)) : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
+    }
+    @GetMapping("contact-info")
+    public ResponseEntity<CardsContactInfoDetailsDto> getiAccountServices() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDetailsDto);
     }
 
 }

@@ -2,9 +2,11 @@ server:
   port: 8082
 spring:
   profiles:
-    active: local
+    active: "local"
   application:
-    name: cards
+    name: "cards"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
 
   jpa:
     hibernate:
@@ -27,7 +29,7 @@ management:
 build:
   version: "1.0 V"
 
-accounts:
+cards:
   massage: "Welcome In SunBank Cards Application...!"
   contactDetails:
     name: "Prasun Patidar"

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+build:
+  version: "Docker-Release-1.0 V"
+
+cards:
+  massage: "Welcome In SunBank Cards Application with Docker configuration..!"
+  contactDetails:
+    name: "Prasun Patidar"
+    email: "codebysun@gmail.com"
+  onCallSupport:
+    - 11111-11111
+    - 77777-77777

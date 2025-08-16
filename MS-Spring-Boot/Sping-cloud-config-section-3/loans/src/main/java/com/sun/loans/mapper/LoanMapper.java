@@ -1,29 +1,29 @@
 package com.sun.loans.mapper;
 
 import com.sun.loans.dto.LoanDto;
-import com.sun.loans.entity.Loan;
+import com.sun.loans.entity.Loans;
 
 public class LoanMapper {
-    public  static Loan mapLoadDtoToLoan(LoanDto loanDto, Loan loan) {
+    public  static Loans mapLoadDtoToLoan(LoanDto loanDto, Loans loans) {
 
-        loan.setMobileNumber(loanDto.getMobileNumber());
-        loan.setLoanNumber(loanDto.getLoanNumber());
-        loan.setLoanType(loanDto.getLoanType());
-        loan.setTotalLoanAmount(loanDto.getTotalLoanAmount());
-        loan.setPaidAmount(loanDto.getPaidAmount());
-        loan.setOutstandingAmount(loanDto.getOutstandingAmount());
+        loans.setMobileNumber(loanDto.getMobileNumber());
+        loans.setLoanNumber(loanDto.getLoanNumber());
+        loans.setLoanType(loanDto.getLoanType());
+        loans.setTotalLoanAmount(loanDto.getTotalLoanAmount());
+        loans.setPaidAmount(loanDto.getPaidAmount());
+        loans.setOutstandingAmount(loanDto.getOutstandingAmount());
 
-        return loan;
+        return loans;
     }
-    public static LoanDto mapLoadToLoanDto(Loan loan, LoanDto loanDto) {
+    public static LoanDto mapLoadToLoanDto(Loans loans, LoanDto loanDto) {
 
         loanDto = new LoanDto.Builder()
-                .loanType(loan.getLoanType())
-                .mobileNumber(loan.getMobileNumber())
-                .loanNumber(loan.getLoanNumber())
-                .totalLoanAmount(loan.getTotalLoanAmount())
-                .paidAmount(loan.getPaidAmount())
-                .outstandingAmount(loan.getOutstandingAmount())
+                .loanType(loans.getLoanType())
+                .mobileNumber(loans.getMobileNumber())
+                .loanNumber(loans.getLoanNumber())
+                .totalLoanAmount(loans.getTotalLoanAmount())
+                .paidAmount(loans.getPaidAmount())
+                .outstandingAmount(loans.getOutstandingAmount())
                 .build();
         return loanDto;
     }
