@@ -18,7 +18,43 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - spring-app-mysql-net
+      - spring-app-ms-net
+
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
+    ports:
+      - "9000:9000"       # RabbitMQ messaging port
+      - "90000:90000"     # RabbitMQ management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:90000" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - spring-app-ms-net
+
+  configserver:
+    image: codebysun/configserver:latest
+    container_name: configserver
+    depends_on:
+      mysql-app-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8071:8071"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 9000
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    networks:
+      - spring-app-ms-net
 
   accounts:
     image: codebysun/accounts:latest
@@ -34,7 +70,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
-      - spring-app-mysql-net
+      - spring-app-ms-net
 
   loans:
     image: codebysun/loans:latest
@@ -50,7 +86,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
-      - spring-app-mysql-net
+      - spring-app-ms-net
 
   cards:
     image: codebysun/cards:latest
@@ -66,8 +102,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
-      - spring-app-mysql-net
+      - spring-app-ms-net
 
 networks:
-  spring-app-mysql-net:
+  spring-app-ms-net:
     driver: bridge

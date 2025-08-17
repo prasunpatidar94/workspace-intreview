@@ -436,3 +436,11 @@ mvn clean compile install jib:dockerBuild -Dspring.profiles.active=docker -Dskip
     ```
 
 
+Spring cloud configuration 
+  - git/path/classpath
+  - encryption values in properties 
+  - spring actuator to refresh the properties (trigger refresh api each service) - http://localhost:8080/actuator/refresh
+  - Sping cloud bus (using rabbitmq and kafaka ) --(only one microservice busrefresh trigger )- http://localhost:8082/actuator/busrefresh
+  - git hooks -> top of spring bus approach no needed to trigger automatically  it will automatically refresh when git got new update configuration
+
+
