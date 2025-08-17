@@ -9,7 +9,7 @@ build:
   version: "Local-Release-1.0 V"
 
 cards:
-  massage: "Welcome In SunBank Cards Application with Local configuration.. Changes 111111100000000000!"
+  massage: "Welcome In SunBank Cards Application with Local configuration.. Changes !"
   contactDetails:
     name: "Prasun Patidar"
     email: "{cipher}7e5f115446a084a43d93e9a9f5654f04ff14d1960ef705048348de9769d50c1e8695b0855a6797116a1f4d587685fe43"
