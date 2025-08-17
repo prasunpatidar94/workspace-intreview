@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: configserver
+  rabbitmq:
+    host: localhost
+    password: "guest"
+    username: "guest"
+    port: 9000
   profiles:
     active: git
   cloud:
@@ -23,3 +28,4 @@ spring:
 encrypt:
   key: "a3f5e9c2b1d4f6e7c8a9bt3k52764tb5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1"
 #  http://localhost:8071/encryptv -- POST method get encrypted data
+

@@ -7,7 +7,12 @@ spring:
     name: "cards"
   config:
     import: "optional:configserver:http://localhost:8071/"
-
+  rabbitmq:
+    host: localhost
+    password: "guest"
+    username: "guest"
+    port: 9000
+#  http://localhost:8082/actuator/busrefresh  --any of the service sit will refresh all services
   jpa:
     hibernate:
       ddl-auto: update
