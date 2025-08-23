@@ -1,10 +1,10 @@
 #!/bin/bash
 
 set -e  # Exit on error
-
-echo "🧹 Cleaning up Docker containers and images..."
-docker-compose down --remove-orphans
-docker system prune -f --volumes
+#
+#echo "🧹 Cleaning up Docker containers and images..."
+#docker-compose down --remove-orphans
+#docker system prune -f --volumes
 
 
 
@@ -43,5 +43,5 @@ sleep 2
 sleep 2
 echo "🔧=============Docker Compose Container Deployment===========================🔧"
 echo "🐳 Starting Docker Compose for Container Deployment...!"
-docker-compose up -d
+cd /d D:\workspace-intreview\MS-Spring-Boot\Sping-cloud-config-section-3\docker-compose-files\production && docker-compose up -d
 sleep 10
