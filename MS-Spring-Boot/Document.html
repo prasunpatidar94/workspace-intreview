@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Microservices Setup & Spring Cloud Configuration – Detailed Guide</title>
+    <style>
+        :root{
+          --bg:#0b1020; --panel:#121935; --ink:#e7e9f5; --muted:#aab0c7; --brand:#7c9aff; --accent:#22d3ee;
+          --code-bg:#0f172a; --code-border:#1f2a4a; --chip:#1b2347; --good:#16a34a; --warn:#f59e0b;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; background:linear-gradient(180deg, #0b1020 0%, #0a0f1e 100%); color:var(--ink);}
+
+        /* Layout */
+        .app{display:grid; grid-template-columns:280px 1fr; min-height:100vh;}
+        .sidebar{position:sticky; top:0; align-self:start; height:100vh; overflow:auto; background:rgba(10,15,30,.6); border-right:1px solid #1f2a4a; padding:24px 16px;}
+        .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;}
+        .brand .dot{width:10px; height:10px; background:var(--accent); border-radius:50%; box-shadow:0 0 18px var(--accent)}
+        .brand small{color:var(--muted); font-weight:600}
+        .nav{margin-top:16px; display:flex; flex-direction:column; gap:8px}
+        .nav a{padding:10px 12px; border-radius:12px; color:var(--ink); text-decoration:none; background:transparent; border:1px solid transparent}
+        .nav a:hover{background:var(--chip); border-color:#263056}
+
+        .content{padding:32px clamp(18px, 5vw, 56px)}
+        h1{font-size:clamp(26px, 3.4vw, 44px); margin:4px 0 12px;}
+        h2{font-size:clamp(20px, 2.4vw, 30px); margin:40px 0 12px;}
+        h3{font-size:clamp(18px, 2vw, 24px); margin:28px 0 10px;}
+        p,li{color:#d7dbef}
+
+        .section{background:rgba(18,25,53,.7); border:1px solid #1f2a4a; border-radius:18px; padding:20px; margin:16px 0 26px; box-shadow:0 6px 30px rgba(0,0,0,.25)}
+        .grid{display:grid; gap:14px}
+        .grid.cols-2{grid-template-columns:repeat(auto-fit, minmax(260px, 1fr))}
+
+        .chip{display:inline-block; padding:6px 10px; border-radius:999px; background:var(--chip); border:1px solid #28335f; color:#c9d2ff; font-weight:600; font-size:12px}
+
+        /* Code blocks */
+        pre{position:relative; background:var(--code-bg); border:1px solid var(--code-border); border-radius:14px; padding:14px 16px; overflow:auto;}
+        code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:13px; line-height:1.5;}
+        .copy{position:absolute; top:8px; right:8px; background:#1f2a4a; color:#e5e7f8; border:1px solid #2a3560; padding:6px 10px; border-radius:8px; cursor:pointer; font-size:12px}
+        .copy:active{transform:translateY(1px)}
+
+        /* Tables */
+        table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid #263055; overflow:hidden; border-radius:14px;}
+        th, td{padding:10px 12px; text-align:left;}
+        thead th{background:#171f3f; color:#dfe5ff; position:sticky; top:0}
+        tbody tr:nth-child(odd){background:rgba(18,25,53,.55)}
+        tbody tr:nth-child(even){background:rgba(18,25,53,.25)}
+        td code{background:#0e1430; padding:2px 6px; border-radius:6px; border:1px solid #24315e}
+
+        a.inline{color:#9bb4ff; text-decoration:none; border-bottom:1px dashed #3953c6}
+
+        .note{padding:10px 12px; border-left:3px solid var(--accent); background:rgba(34,211,238,.06); border-radius:10px}
+
+        @media (max-width:900px){ .app{grid-template-columns:1fr} .sidebar{position:relative; height:auto} }
+    </style>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="dot"></span>
+            <div>Microservices & Spring Cloud<br><small>Hands-on Reference</small></div>
+        </div>
+        <nav class="nav">
+            <a href="#sec-ms">Section 2 · Microservices Setup</a>
+            <a href="#ports">Ports & Swagger</a>
+            <a href="#docker-mysql">Docker MySQL</a>
+            <a href="#sql">SQL Queries</a>
+            <a href="#architecture">Architecture Principles</a>
+            <a href="#deployment">Deployment (Docker/K8s)</a>
+            <a href="#image-builders">Docker Image Builders</a>
+            <a href="#docker-common">Common Docker Commands</a>
+            <a href="#fifteen">15‑Factor Methodology</a>
+            <a href="#dynamic-config">Dynamic Config Strategies</a>
+            <a href="#spring-cloud">Spring Cloud Config Overview</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header>
+            <h1>Microservices Setup & Spring Cloud Configuration</h1>
+            <p class="note">This single page collects essential commands, configs, and explanations for setting up microservices, containers, and Spring Cloud configuration (Config Server, Encryption, Actuator, Bus, and Git Hooks).</p>
+        </header>
+
+        <section id="sec-ms" class="section">
+            <h2>Section 2: Microservices Setup</h2>
+            <p>🔗 <strong>Repository</strong>: <a class="inline" href="https://github.com/eazybytes/microservices/tree/3.4.1/section2" target="_blank" rel="noopener">GitHub – Section 2</a></p>
+        </section>
+
+        <section id="ports" class="section">
+            <h3>🛠️ Port Configuration</h3>
+            <ul>
+                <li><span class="chip">Account Service</span> <code>8080</code></li>
+                <li><span class="chip">Loan Service</span> <code>8081</code></li>
+                <li><span class="chip">Cards Service</span> <code>8081</code></li>
+            </ul>
+            <h4>🧭 Swagger URLs</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>http://localhost:8080/swagger-ui/index.html
+http://localhost:8081/swagger-ui/index.html</code></pre>
+            <h4>📍 IntelliJ Proxy Settings</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>C:\Users\Someone\AppData\Roaming\JetBrains\IntelliJIdea2025.1\options\proxy</code></pre>
+        </section>
+
+        <section id="docker-mysql" class="section">
+            <h2>🐬 Docker MySQL Container Setup</h2>
+            <pre><button class="copy" data-copy>Copy</button><code>docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=rootpass -e MYSQL_DATABASE=sunbank -e MYSQL_USER=user -e MYSQL_PASSWORD=pass123 -p 3306:3306 -d mysql:8.0</code></pre>
+            <h3>📦 docker-compose.yaml</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:</code></pre>
+        </section>
+
+        <section id="sql" class="section">
+            <h2>🗃️ SQL Queries</h2>
+            <pre><button class="copy" data-copy>Copy</button><code>SELECT *
+FROM sunbank.loan;
+SELECT *
+FROM sunbank.customer;
+SELECT *
+FROM sunbank.accounts;</code></pre>
+        </section>
+
+        <section id="architecture" class="section">
+            <h2>🧩 Architecture Principles</h2>
+            <div class="grid cols-2">
+                <div>
+                    <h3>📐 Work Segmentation</h3>
+                    <ul>
+                        <li>Domain‑Driven Design</li>
+                        <li>Event‑Driven Design</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🌿 Strangler Fig Pattern</h3>
+                    <p>Suitable for migrating monolithic legacy applications to microservices.</p>
+                    <p><strong>Steps</strong>: <code>Identification → Transformation → Co‑existence → Elimination</code></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="deployment" class="section">
+            <h2>🚀 Deployment Challenges & Solutions</h2>
+            <h3>🐳 Dockerfile Example</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>FROM openjdk:17-jdk-slim
+MAINTAINER codeBySUN.com
+COPY target/accounts-0.0.1-SNAPSHOT.jar accounts-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "accounts-0.0.1-SNAPSHOT.jar"]</code></pre>
+            <h3>🧪 Docker Commands</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>docker build . -t codebysun/accounts:0.1v
+docker image list
+docker container list
+docker inspect &lt;IMAGE_ID&gt;
+docker run -d -p 8080:8080 codebysun/accounts:0.1v</code></pre>
+            <h3>🔧 Spring Boot Fat Jar Commands</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>mvn clean install
+mvn spring-boot:run
+java -jar &lt;JAR_NAME&gt;.jar</code></pre>
+        </section>
+
+        <section id="image-builders" class="section">
+            <h2>🏗️ Docker Image Builders</h2>
+
+            <h3>🛠️ Buildpack Configuration (<a class="inline" href="https://buildpacks.io" target="_blank" rel="noopener">buildpacks.io</a>)</h3>
+            <h4>Gradle</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>bootBuildImage {
+    imageName = "codebysun/${rootProject.name}:v1"
+    environment = ['BP_JVM_VERSION': '17']
+}
+
+# run
+gradle bootBuildImage</code></pre>
+            <h4>Maven</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>&lt;configuration&gt;
+    &lt;image&gt;
+        &lt;name&gt;sun/sunbank:latest&lt;/name&gt;
+    &lt;/image&gt;
+&lt;/configuration&gt;
+
+# run
+mvn spring-boot:build-image</code></pre>
+
+            <h3>☁️ Jib Plugin by Google</h3>
+            <h4>Gradle</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.cloud.tools.jib' version '3.4.5'
+}
+
+jib.to.image = "codebysun/${rootProject.name}:v1"
+
+# build
+gradle clean
+gradle build --warning-mode=all
+gradle jib
+gradle jibDockerBuild</code></pre>
+            <h4>Maven</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>&lt;plugin&gt;
+  &lt;groupId&gt;com.google.cloud.tools&lt;/groupId&gt;
+  &lt;artifactId&gt;jib-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.4.6&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;to&gt;
+      &lt;image&gt;codebysun/accounts:latest&lt;/image&gt;
+    &lt;/to&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+
+# build
+mvn clean compile jib:dockerBuild -DskipTests
+mvn compile jib:build</code></pre>
+        </section>
+
+        <section id="docker-common" class="section">
+            <h2>🧰 Common Docker Commands</h2>
+            <pre><button class="copy" data-copy>Copy</button><code>docker image list
+docker image list -a
+docker image push docker.io/codebysun/loans:v1
+docker run docker.io/codebysun/loans:v1
+docker container list
+docker container stop &lt;container_id&gt;
+docker image rm codebysun/loans:v1</code></pre>
+        </section>
+
+        <section id="fifteen" class="section">
+            <h2>🔒 15‑Factor Methodology</h2>
+            <ol>
+                <li>One Codebase → One Repo</li>
+                <li>API First → Spring Boot REST APIs</li>
+                <li>Dependency Management → Maven/Gradle</li>
+                <li>Build → Release → Run (CI/CD: Jenkins/GitHub Actions)</li>
+                <li>Config Separation → Spring Profiles &amp; Config Server</li>
+                <li>Centralized Logging → Log Aggregation Tools</li>
+                <li>Disposability → Docker/Kubernetes</li>
+                <li>Backing Services → Configurable External Services</li>
+                <li>Environment Parity Avoids its Drift Across Environments</li>
+                <li>Admin Processes → SIT → UAT → PROD Flow</li>
+                <li>Port Binding → Dynamic Port Allocation</li>
+                <li>Statelessness → Uses Redis/DB; Avoid Tight Coupling</li>
+                <li>Concurrency → Horizontal Scaling with Threads</li>
+                <li>Telemetry → Actuator, Health, Tracing</li>
+                <li>AuthN/AuthZ → Spring Security (Zero Trust)</li>
+            </ol>
+        </section>
+
+        <section id="dynamic-config" class="section">
+            <h2>🛠️ Dynamic Configuration Strategies</h2>
+            <p>To make your Spring Boot app adaptable across environments, prefer externalized configuration with clear precedence.</p>
+            <h3>Spring Boot Configuration Priority (High → Low)</h3>
+            <table>
+                <thead><tr><th>No</th><th>Configuration Source</th></tr></thead>
+                <tbody>
+                <tr><td>1</td><td>Command Line Arguments</td></tr>
+                <tr><td>2</td><td><code>ServletConfig</code> init Parameters</td></tr>
+                <tr><td>3</td><td><code>ServletContext</code> init Parameters</td></tr>
+                <tr><td>4</td><td>JNDI attributes from <code>java:comp/env</code></td></tr>
+                <tr><td>5</td><td>Java System Properties (<code>System.getProperties()</code>)</td></tr>
+                <tr><td>6</td><td>OS Environment Variables</td></tr>
+                <tr><td>7</td><td><code>application.properties</code> file</td></tr>
+                </tbody>
+            </table>
+
+            <h3>📊 Configuration Approaches in Spring Boot</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Approach</th>
+                    <th>Example</th>
+                    <th>Benefits</th>
+                    <th>Drawbacks</th>
+                    <th>Use Case</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><code>@Value</code> Annotation</td>
+                    <td><code>@Value("${server.port}")</code></td>
+                    <td>Simple for single values</td>
+                    <td>Hard to manage many values</td>
+                    <td>Isolated primitive values</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><code>Environment</code> Interface</td>
+                    <td><code>env.getProperty("spring.datasource.url")</code></td>
+                    <td>Runtime flexibility</td>
+                    <td>Not type‑safe</td>
+                    <td>Dynamic access, utilities</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><code>@ConfigurationProperties</code></td>
+                    <td><code>@ConfigurationProperties(prefix = "app")</code></td>
+                    <td>Type‑safe, grouped values</td>
+                    <td>Requires POJO/records</td>
+                    <td>Structured config objects</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>🧪 Example <code>application.properties</code></h3>
+            <pre><button class="copy" data-copy>Copy</button><code># application.properties
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+app.name=SunBank
+app.version=1.0</code></pre>
+
+            <h3>🧾 Example POJO for <code>@ConfigurationProperties</code></h3>
+            <pre><button class="copy" data-copy>Copy</button><code>// main class
+@EnableConfigurationProperties(value = AccountContactInfoDetailsDto.class)
+public class AccountsApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(AccountsApplication.class, args);
+  }
+}
+
+// record mapping
+@ConfigurationProperties(prefix = "accounts")
+public record AccountContactInfoDetailsDto(String massage,
+                                           Map&lt;String, String&gt; contactDetails,
+                                           List&lt;String&gt; onCallSupport) {}
+
+// YAML
+// accounts:
+//   massage: "Welcome In SunBank ...!"
+//   contactDetails:
+//     name: "Prasun Patidar"
+//     email: "codebysun@gmail.com"
+//   onCallSupport:
+//     - 88888-88888
+//     - 99999-99999
+
+// Alternative POJO
+@Component
+@ConfigurationProperties(prefix = "app")
+public class AppConfig {
+  private String name;
+  private String version;
+  // getters/setters
+}</code></pre>
+
+            <h3>Examples in Context</h3>
+            <pre><button class="copy" data-copy>Copy</button><code># application.properties
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+app.name=SunBank
+app.version=1.0</code></pre>
+
+            <h3>✅ Example: <code>@Value</code></h3>
+            <pre><button class="copy" data-copy>Copy</button><code>import org.springframework.beans.factory.annotation.Value;
+
+@Value("${app.name}")
+private String appName;</code></pre>
+
+            <h3>✅ Example: <code>Environment</code> Interface</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>import org.springframework.core.env.Environment;
+
+@Autowired
+private Environment environment;
+
+public String acctHealth() {
+  return " Java-version : " + environment.getProperty("java.version");
+}</code></pre>
+
+            <h3>Provide configuration externally</h3>
+            <p>Sometimes you cannot edit the default properties before build/run. Use one of the following:</p>
+            <h4>1) Command Line (highest priority)</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>java -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar --spring.profiles.active="local"</code></pre>
+            <h4>2) JVM System Properties</h4>
+            <pre><button class="copy" data-copy>Copy</button><code># Run
+java -Dspring.profiles.active=docker -DskipTests -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar
+# Build
+mvn clean compile install jib:dockerBuild -Dspring.profiles.active=docker -DskipTests</code></pre>
+            <h4>3) Environment Variables</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>// Java approach
+@Component
+public class EnvConfig {
+  @Autowired private Environment env;
+  @PostConstruct
+  public void init() {
+    String dbUrl = env.getProperty("SPRING_DATASOURCE_URL", "jdbc:mysql://localhost:3306/defaultdb");
+    String dbUser = env.getProperty("SPRING_DATASOURCE_USERNAME", "defaultUser");
+    String dbPass = env.getProperty("SPRING_DATASOURCE_PASSWORD", "defaultPass");
+    System.out.println("DB URL: " + dbUrl);
+    System.out.println("DB User: " + dbUser);
+    System.out.println("DB Pass: " + dbPass);
+  }
+}</code></pre>
+            <pre><button class="copy" data-copy>Copy</button><code># Windows (PowerShell style)
+$env:SPRING_PROFILES_ACTIVE="local"; java -jar .\accounts\target\accounts-0.0.1-SNAPSHOT.jar
+
+# Linux / macOS
+SPRING_PROFILES_ACTIVE="local" java -jar ./accounts/target/accounts-0.0.1-SNAPSHOT.jar</code></pre>
+        </section>
+
+        <section id="spring-cloud" class="section">
+            <h2>🌱 Spring Cloud Configuration Overview</h2>
+            <p>Centralize configuration for all microservices and environments. Includes Git/path/classpath backends, encryption, Actuator refresh, Spring Cloud Bus, and Git hooks automation.</p>
+
+            <h3>📁 Configuration Sources</h3>
+            <h4>1) Git Repository (recommended)</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/your-org/config-repo
+          clone-on-start: true
+          search-paths: config/*</code></pre>
+            <p><strong>Dependency</strong>: <code>org.springframework.cloud:spring-cloud-config-server</code></p>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_git_backend" target="_blank" rel="noopener">Git Backend</a></p>
+
+            <h4>2) Classpath (native)</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config</code></pre>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_native_backend" target="_blank">Native Backend</a></p>
+
+            <h4>3) Filesystem Path</h4>
+            <pre><button class="copy" data-copy>Copy</button><code>spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///path/to/config</code></pre>
+
+            <h3>🔐 Encrypted Values</h3>
+            <pre><button class="copy" data-copy>Copy</button><code># encrypt
+curl -X POST http://localhost:8888/encrypt -d 'my-secret-value'
+# returns {cipher}...
+
+# server key (symmetric example)
+spring:
+  cloud:
+    config:
+      server:
+        encrypt:
+          key: your-secret-key
+
+# keystore example
+encrypt:
+  key-store:
+    location: classpath:/keystore.jks
+    password: changeit
+    alias: mykey</code></pre>
+            <p><strong>Dependencies</strong>: <code>spring-cloud-starter-config</code> (client), optional <code>spring-security-rsa</code> for asymmetric keys.</p>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_encryption_and_decryption" target="_blank">Encryption &amp; Decryption</a></p>
+
+            <h3>🔄 Refresh with Spring Actuator</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>POST http://localhost:8080/actuator/refresh</code></pre>
+            <pre><button class="copy" data-copy>Copy</button><code>@RefreshScope
+@Bean
+public MyBean myBean() { return new MyBean(); }</code></pre>
+            <p><strong>Dependencies</strong>: <code>spring-boot-starter-actuator</code>, <code>spring-cloud-starter-config</code></p>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_refresh_scope" target="_blank">Refresh Scope</a></p>
+
+            <h3>🚍 Spring Cloud Bus (RabbitMQ/Kafka)</h3>
+            <pre><button class="copy" data-copy>Copy</button><code># Kafka
+spring:
+  cloud:
+    bus:
+      enabled: true
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+
+# RabbitMQ
+spring:
+  cloud:
+    stream:
+      rabbit:
+        binder:
+          addresses: localhost:5672</code></pre>
+            <pre><button class="copy" data-copy>Copy</button><code>POST http://localhost:8082/actuator/busrefresh</code></pre>
+            <p><strong>Dependencies</strong>: choose one – <code>spring-cloud-starter-bus-amqp</code> or <code>spring-cloud-starter-bus-kafka</code></p>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-bus/docs/current/reference/html/" target="_blank">Spring Cloud Bus</a></p>
+
+            <h3>🪝 Git Hooks + Spring Cloud Bus</h3>
+            <pre><button class="copy" data-copy>Copy</button><code>#!/bin/bash
+# post-push (example)
+curl -X POST http://localhost:8082/actuator/busrefresh</code></pre>
+            <p><strong>Dependencies</strong>: <code>spring-boot-starter-actuator</code>, <code>spring-cloud-starter-config</code>, and one of <code>spring-cloud-starter-bus-amqp</code> / <code>spring-cloud-starter-bus-kafka</code>.</p>
+            <p>Docs: <a class="inline" href="https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_push_notifications_and_git_hooks" target="_blank">Push Notifications &amp; Git Hooks</a></p>
+
+            <h3>✅ Summary</h3>
+            <table>
+                <thead>
+                <tr><th>Feature</th><th>Description</th><th>Dependency</th></tr>
+                </thead>
+                <tbody>
+                <tr><td>Git / Path / Classpath</td><td>Centralized config sources</td><td><code>spring-cloud-config-server</code></td></tr>
+                <tr><td>Encrypted Properties</td><td>Secure secrets using <code>/encrypt</code> and <code>{cipher}</code></td><td><code>spring-cloud-starter-config</code></td></tr>
+                <tr><td>Actuator Refresh</td><td>Manual refresh via <code>/actuator/refresh</code></td><td><code>spring-boot-starter-actuator</code> + <code>spring-cloud-starter-config</code></td></tr>
+                <tr><td>Spring Cloud Bus</td><td>Auto-propagates config changes</td><td><code>spring-cloud-starter-bus-amqp</code> or <code>-bus-kafka</code></td></tr>
+                <tr><td>Bus Refresh Trigger</td><td>Only one service triggers</td><td>same as Bus</td></tr>
+                <tr><td>Git Hooks</td><td>Automate refresh on Git update</td><td>Actuator + Config + Bus</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer style="margin:40px 0 10px; color:var(--muted); text-align:center">
+            <p>© <script>document.write(new Date().getFullYear());</script> CodeBySUN. All rights reserved.</p>
+        </footer>
+    </main>
+</div>
+
+<script>
+    // Copy-to-clipboard for all code blocks
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const pre = e.target.closest('pre');
+        const code = pre.querySelector('code');
+        const text = code.innerText;
+        navigator.clipboard.writeText(text).then(()=>{
+          const old = btn.textContent; btn.textContent='Copied!';
+          btn.style.background = 'linear-gradient(90deg, var(--brand), var(--accent))';
+          setTimeout(()=>{ btn.textContent=old; btn.style.background='#1f2a4a'; }, 1200);
+        });
+      });
+    });
+</script>
+</body>
+</html>
