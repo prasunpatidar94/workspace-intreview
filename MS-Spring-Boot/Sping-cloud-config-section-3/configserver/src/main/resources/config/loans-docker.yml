@@ -1,16 +1,16 @@
 spring:
-  application:
-    name: ${SPRING_APPLICATION_NAME}
-  config:
-    import: ${SPRING_CONFIG_SERVER}
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE}
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-
+  config:
+    import: ${SPRING_CONFIG_SERVER}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 #    import: "optional:configserver:http://localhost:8071/"
 build:
   version: "Docker-Release-1.0 V"
