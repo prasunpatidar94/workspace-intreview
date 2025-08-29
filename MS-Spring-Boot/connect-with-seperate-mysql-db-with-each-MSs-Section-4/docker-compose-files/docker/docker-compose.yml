@@ -1,0 +1,155 @@
+version: '3.8'
+
+
+x-variables:
+  rabbit_user: &rabbit_user guest
+  rabbit_pass: &rabbit_pass guest
+  rabbit_port: &rabbit_port 5672
+  application_profile: &application_profile prod
+
+
+
+services:
+  mysql-app-db:
+    image: mysql:8.0
+    container_name: mysql-app-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: sunbank
+      MYSQL_USER: user
+      MYSQL_PASSWORD: docker123
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - spring-app-ms-net
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # RabbitMQ messaging port
+      - "15672:15672"     # RabbitMQ management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: *rabbit_user
+      RABBITMQ_DEFAULT_PASS: *rabbit_pass
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - spring-app-ms-net
+
+  configserver:
+    image: codebysun/configserver:latest
+    container_name: configserver
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8071:8071"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: *rabbit_port
+      RABBITMQ_USERNAME: *rabbit_user
+      RABBITMQ_PASSWORD: *rabbit_user
+      SPRING_PROFILES_ACTIVE: git,prod
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8071/actuator/health/readiness | grep UP || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - spring-app-ms-net
+
+  accounts:
+    image: codebysun/accounts:latest
+    container_name: accounts
+    depends_on:
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: docker123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: *application_profile
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: *rabbit_port
+      RABBITMQ_USERNAME: *rabbit_user
+      RABBITMQ_PASSWORD: *rabbit_user
+    #    entrypoint: ["/bin/sh", "-c", "echo Starting Account Application  && java -jar app.jar --spring.profiles.active=*application_profile"]
+    networks:
+      - spring-app-ms-net
+
+  loans:
+    image: codebysun/loans:latest
+    container_name: loans
+    depends_on:
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: docker123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: *application_profile
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: *rabbit_port
+      RABBITMQ_USERNAME: *rabbit_user
+      RABBITMQ_PASSWORD: *rabbit_user
+    #    entrypoint: [ "/bin/sh", "-c", "echo Starting Loan Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
+    networks:
+      - spring-app-ms-net
+
+  cards:
+    image: codebysun/cards:latest
+    container_name: cards
+    depends_on:
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: docker123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: *application_profile
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: *rabbit_port
+      RABBITMQ_USERNAME: *rabbit_user
+      RABBITMQ_PASSWORD: *rabbit_user
+    #    entrypoint: [ "/bin/sh", "-c", "echo Starting Card Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
+    networks:
+      - spring-app-ms-net
+
+volumes:
+  mysql-data:
+
+networks:
+  spring-app-ms-net:
+    driver: bridge
