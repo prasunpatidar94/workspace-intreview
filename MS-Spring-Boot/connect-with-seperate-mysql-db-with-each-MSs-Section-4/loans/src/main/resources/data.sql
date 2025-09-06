@@ -1,4 +1,4 @@
-INSERT IGNORE  INTO sunbank.loans (mobile_number, loan_number, loan_type,
+INSERT IGNORE  INTO loans_db.loans (mobile_number, loan_number, loan_type,
                            total_loan_amount, paid_amount, outstanding_amount,
                            created_by, created_at, updated_by, updated_at)
 VALUES ('9876543210', 'LN20250001', 'Home Loan', 5000000.00, 1000000.00, 4000000.00, 'admin', '2025-08-01 10:00:00',

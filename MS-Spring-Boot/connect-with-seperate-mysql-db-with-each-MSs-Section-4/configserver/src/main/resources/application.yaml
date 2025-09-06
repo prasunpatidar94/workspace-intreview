@@ -4,11 +4,6 @@ server:
 spring:
   application:
     name: configserver
-  rabbitmq:
-    host: localhost
-    username: "dev"
-    password: "dev"
-    port: 5672
   profiles:
     active: git
   cloud:
@@ -18,7 +13,7 @@ spring:
           uri: "https://github.com/prasunpatidar94/workspace-intreview.git"
           force-pull: true
           timeout: 5
-          search-paths: "MS-Spring-Boot/Sping-cloud-config-section-3/configserver/src/main/resources/config"
+          search-paths: "MS-Spring-Boot/connect-with-seperate-mysql-db-with-each-MSs-Section-4/configserver/src/main/resources/config"
           default-label: "main"
           clone-on-start: true
 #          clone-on-start: true

@@ -40,10 +40,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -102,7 +99,7 @@
 				<version>3.4.6</version>
 				<configuration>
 					<to>
-						<image>codebysun/${project.artifactId}:latest</image>
+						<image>codebysun/${project.artifactId}:0.4</image>
 					</to>
 				</configuration>
 			</plugin>

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS sunbank.loans (
+CREATE TABLE IF NOT EXISTS loans_db.loans (
                       loan_id BIGINT PRIMARY KEY AUTO_INCREMENT,
                       mobile_number VARCHAR(20),
                       loan_number VARCHAR(50),
