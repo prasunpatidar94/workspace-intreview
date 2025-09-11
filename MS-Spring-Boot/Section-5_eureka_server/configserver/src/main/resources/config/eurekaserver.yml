@@ -1,11 +1,3 @@
-server:
-  port: 8761
-
-spring:
-  application:
-  name: eurekaserver
-  config:
-    import: "configserver:http://localhost:8071/"
 eureka:
   instance:
     hostname: localhost
