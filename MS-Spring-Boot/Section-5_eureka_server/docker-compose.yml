@@ -21,22 +21,7 @@ services:
       - spring-app-ms-net
 
 
-  rabbitmq:
-    image: rabbitmq:4-management
-    container_name: rabbitmq
-    ports:
-      - "9000:9000"       # RabbitMQ messaging port
-      - "90000:90000"     # RabbitMQ management UI
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:90000" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - spring-app-ms-net
+
 
   configserver:
     image: codebysun/configserver:latest

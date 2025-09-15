@@ -4,11 +4,6 @@ server:
 spring:
   application:
     name: configserver
-  rabbitmq:
-    host: localhost
-    username: "dev"
-    password: "dev"
-    port: 5672
   profiles:
     active: git
   cloud:

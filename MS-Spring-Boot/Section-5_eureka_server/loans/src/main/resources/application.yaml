@@ -14,11 +14,7 @@ spring:
 
   config:
     import: "configserver:http://localhost:8071/"
-  rabbitmq:
-    host: localhost
-    password: "dev"
-    username: "dev"
-    port: 5672
+
   jpa:
     hibernate:
       ddl-auto: update
