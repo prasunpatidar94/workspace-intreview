@@ -10,6 +10,7 @@ public class Beta  extends Baap{
         return "PAPA or BETA dono ko bulaya he..!"+name;
     }
     public static String staticMember(){
-        return "static Member ko bulaya he..!"+name;
+//        return "static Member ko bulaya he..!"+name;
+        return "static Member ko bulaya he..!";
     }
 }

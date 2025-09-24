@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 //@EnableJpaRepositories("com.pp.repo")
 //@EntityScan("com.pp.entity")
 @EnableConfigurationProperties(value = AccountContactInfoDetailsDto.class)
+@EnableFeignClients
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")  // to enable jpa auditing with or custom configuration
 @OpenAPIDefinition(
         info = @Info(

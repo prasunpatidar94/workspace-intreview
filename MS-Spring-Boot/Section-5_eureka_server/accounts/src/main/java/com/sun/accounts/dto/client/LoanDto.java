@@ -1,7 +1,6 @@
-package com.sun.loans.dto;
+package com.sun.accounts.dto.client;
 
 
-import com.sun.loans.enums.LoanType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -11,12 +10,12 @@ import lombok.Getter;
 public class LoanDto {
 
     @Schema(description = "Mobile Number of the Customer", example = "9876543210")
-//    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digit with valid value ..!")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digit with valid value ..!")
     @NotNull (message = "Mobile number should not be NULL/EMPTY")
     private  String mobileNumber;
 
     @NotEmpty(message = "Loan number should not be NULL/EMPTY")
-//    @Pattern(regexp = "(^$|[0-9]{12})", message = "Loan number must be 12 digit with valid value ..!")
+    @Pattern(regexp = "(^$|[0-9]{12})", message = "Loan number must be 12 digit with valid value ..!")
     @Schema(description = "Loan Number of the Loan" ,example = "LN1001")
     private  String loanNumber;
 
@@ -24,19 +23,19 @@ public class LoanDto {
     @Schema(description = "Type of Loan" ,example = "CAR_LOAN")
     private  String loanType;
 
-//    @NegativeOrZero(message = "Total Amount of Loan should not be Zero / Negative")
+    @NegativeOrZero(message = "Total Amount of Loan should not be Zero / Negative")
     @Schema(description = "Total Amount of Loan" ,example = "199465.976")
     private  Double totalLoanAmount;
 
-//    @Negative(message = "Paid Amount of Loan should not be Negative")
+    @Negative(message = "Paid Amount of Loan should not be Negative")
     @Schema(description = "Paid Amount of Loan" ,example = "19895.976")
     private  Double paidAmount;
 
-//    @Negative(message = "OutStanding Amount of Loan should be Negative")
+    @Negative(message = "OutStanding Amount of Loan should be Negative")
     @Schema(description = "Paid Amount of Loan" ,example = "99465.976")
     private  Double outstandingAmount;
 
-    public  LoanDto(){}
+    public LoanDto(){}
     private LoanDto(Builder builder) {
         this.mobileNumber = builder.mobileNumber;
         this.loanNumber = builder.loanNumber;

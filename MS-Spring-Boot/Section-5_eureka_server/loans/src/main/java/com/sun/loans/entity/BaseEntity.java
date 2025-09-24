@@ -1,5 +1,6 @@
 package com.sun.loans.entity;
 
+import jakarta.persistence.Cache;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @MappedSuperclass
 @Setter
@@ -24,11 +26,11 @@ public class BaseEntity {
     private  String createdBy;
     @Column(updatable = false)
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     @LastModifiedBy
     @Column(insertable = false)
     private  String updatedBy;
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt =LocalDateTime.now();
 }

@@ -5,7 +5,7 @@ plugins {
 	id 'com.google.cloud.tools.jib' version '3.4.5'
 
 }
-jib.to.image="codebysun/${rootProject.name}:latest"
+jib.to.image="codebysun/${rootProject.name}:v5"
 
 group = 'com.sun'
 version = '0.0.1-SNAPSHOT'
@@ -34,9 +34,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
 	annotationProcessor 'org.projectlombok:lombok'

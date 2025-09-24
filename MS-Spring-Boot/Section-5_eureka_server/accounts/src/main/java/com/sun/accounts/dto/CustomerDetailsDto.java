@@ -1,0 +1,39 @@
+package com.sun.accounts.dto;
+
+import com.sun.accounts.dto.client.CardsDto;
+import com.sun.accounts.dto.client.LoanDto;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+@Data
+@Schema(name = "Customer", description = "This Schema Hold Customer,Account,Cards and Loans Details")
+public class CustomerDetailsDto {
+
+    @Schema(description = "Name of the Customer", example = "Prasun Patidar")
+    @NotEmpty(message = "Name can not be empty ...! ")
+    @Size(min = 5, max = 30, message = "The length of name should be between5 to 30 char ...!")
+    private String name;
+
+    @Schema(description = "Email of the Customer", example = "codebysun@gmail.com")
+    @NotEmpty(message = "Email address can not be empty ...! ")
+    @Email(message = "Email Address should be contain valid value ...!")
+    private String email;
+
+    @Schema(description = "Mobile Number of the Customer", example = "9876543210")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digit with valid value ..!")
+    private String mobileNumber;
+
+    @Schema(description = "Account Details of the Customer")
+    private AccountsDto accountsDto;
+
+    @Schema(description = "Cards Details of the Customer")
+    private CardsDto CardDto;
+
+    @Schema(description = "Loans Details of the Customer")
+    private LoanDto LoansDto;
+
+}
