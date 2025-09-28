@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   profiles:
-    active: default
+    active: ${SPRING_PROFILES_ACTIVE:default}
   application:
     name: "cards"
 

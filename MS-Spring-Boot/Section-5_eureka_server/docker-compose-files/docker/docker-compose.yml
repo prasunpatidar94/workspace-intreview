@@ -2,7 +2,7 @@ version: '3.8'
 
 
 x-variables:
-  application_profile: &application_profile docker
+  application_profile: &application_profile prod
 
 
 services:
@@ -52,6 +52,8 @@ services:
       - "8070:8070"
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
+      EUREKA_INSTANCE_HOSTNAME: eurekaserver
+      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8070/actuator/health/readiness | grep UP || exit 1" ]
       interval: 10s
@@ -79,6 +81,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eurekaserver:8070/eureka
       SPRING_PROFILES_ACTIVE: *application_profile
     #    entrypoint: ["/bin/sh", "-c", "echo Starting Account Application  && java -jar app.jar --spring.profiles.active=*application_profile"]
     networks:
@@ -102,6 +105,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eurekaserver:8070/eureka
       SPRING_PROFILES_ACTIVE: *application_profile
     #    entrypoint: [ "/bin/sh", "-c", "echo Starting Loan Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
     networks:
@@ -125,6 +129,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eurekaserver:8070/eureka
       SPRING_PROFILES_ACTIVE: *application_profile
     #    entrypoint: [ "/bin/sh", "-c", "echo Starting Card Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
     networks:
