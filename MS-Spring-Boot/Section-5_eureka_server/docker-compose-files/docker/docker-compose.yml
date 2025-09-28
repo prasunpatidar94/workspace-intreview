@@ -56,8 +56,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
       EUREKA_INSTANCE_HOSTNAME: eurekaserver
-      SPRING_CONFIG_SERVER: http://configserver:8071
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
+      SPRING_CONFIG_SERVER: optional:configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8070/actuator/health/readiness | grep UP || exit 1" ]
       interval: 10s

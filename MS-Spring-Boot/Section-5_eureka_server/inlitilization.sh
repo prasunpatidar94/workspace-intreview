@@ -6,40 +6,54 @@ set -e  # Exit on error
 #docker-compose down --remove-orphans
 #docker system prune -f --volumes
 #
+docker rmi codebysun/configserver:v5
+docker rmi codebysun/eurekaserver:v5
+docker rmi codebysun/accounts:v5
+docker rmi codebysun/loans:v5
+docker rmi codebysun/cards:v5
 
 
 echo "🔧===================================Config server================================🔧"
 echo "🔧 Building Config server application image..."
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/configserver && \
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/configserver && \
  mvn clean)
 sleep 2
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/configserver && \
- mvn clean compile install jib:dockerBuild -Dspring.profiles.active=git,prod -DskipTests)
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/configserver && \
+ mvn clean compile install jib:dockerBuild -DskipTests)
+sleep 2
+
+echo "🔧===================================Eureka server================================🔧"
+echo "🔧 Building Config server application image..."
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/eurekaserver && \
+ mvn clean)
+sleep 2
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/eurekaserver && \
+ mvn clean compile install jib:dockerBuild -DskipTests)
 sleep 2
 
 echo "🔧===================================Accounts================================🔧"
 echo "🔧 Building Accounts application image..."
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/accounts && \
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/accounts && \
  mvn clean)
 sleep 2
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/accounts && \
- mvn clean compile install jib:dockerBuild -Dspring.profiles.active=prod -DskipTests)
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/accounts && \
+ mvn clean compile install jib:dockerBuild -DskipTests)
 sleep 2
 echo "🔧===================================Loans===================================🔧"
 echo "🔧 Building Loans application image..."
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/loans && \
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/loans && \
  ./gradlew clean)
 sleep 2
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/loans && \
- ./gradlew clean build jibDockerBuild -Dspring.profiles.active=prod -x test)
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/loans && \
+ ./gradlew clean build jibDockerBuild -x test)
 sleep 2
 echo "🔧===================================Cards===================================🔧"
 echo "🔧 Building Cards application image..."
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/cards && \
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/cards && \
  ./gradlew clean)
 sleep 2
-(cd /d/workspace-intreview/MS-Spring-Boot/Sping-cloud-config-section-3/cards && \
- ./gradlew clean build jibDockerBuild -Dspring.profiles.active=prod -x test)
+(cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/cards && \
+ ./gradlew clean build jibDockerBuild -x test)
 sleep 2
 echo "🔧=============Docker Compose Container Deployment===========================🔧"
 echo "🐳 Starting Docker Compose for Container Deployment...!"
