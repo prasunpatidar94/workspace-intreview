@@ -8,7 +8,7 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${EUREKA_INSTANCE_HOSTNAME}:${server.port}/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE}
 
 #  server:
 #    enable-self-preservation: false  # optional: disable self-preservation for dev
