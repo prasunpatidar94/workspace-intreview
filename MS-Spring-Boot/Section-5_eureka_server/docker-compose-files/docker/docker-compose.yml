@@ -56,7 +56,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
       EUREKA_INSTANCE_HOSTNAME: eurekaserver
-#      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_CONFIG_SERVER: http://configserver:8071
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8070/actuator/health/readiness | grep UP || exit 1" ]
@@ -85,7 +85,7 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_CONFIG_SERVER: http://configserver:8071
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
     #    entrypoint: ["/bin/sh", "-c", "echo Starting Account Application  && java -jar app.jar --spring.profiles.active=*application_profile"]
     networks:
@@ -109,7 +109,7 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_CONFIG_SERVER: http://configserver:8071
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
     #    entrypoint: [ "/bin/sh", "-c", "echo Starting Loan Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
     networks:
@@ -133,7 +133,7 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: configserver:http://configserver:8071/
+      SPRING_CONFIG_SERVER: http://configserver:8071
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
     #    entrypoint: [ "/bin/sh", "-c", "echo Starting Card Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
     networks:
