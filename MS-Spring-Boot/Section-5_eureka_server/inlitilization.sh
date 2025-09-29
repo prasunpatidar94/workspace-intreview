@@ -6,11 +6,11 @@ set -e  # Exit on error
 #docker-compose down --remove-orphans
 #docker system prune -f --volumes
 #
-docker rmi codebysun/configserver:v5
-docker rmi codebysun/eurekaserver:v5
-docker rmi codebysun/accounts:v5
-docker rmi codebysun/loans:v5
-docker rmi codebysun/cards:v5
+#docker rmi codebysun/configserver:v5
+#docker rmi codebysun/eurekaserver:v5
+#docker rmi codebysun/accounts:v5
+#docker rmi codebysun/loans:v5
+#docker rmi codebysun/cards:v5
 
 
 echo "🔧===================================Config server================================🔧"

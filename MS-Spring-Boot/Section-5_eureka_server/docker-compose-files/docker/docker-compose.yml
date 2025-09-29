@@ -1,9 +1,7 @@
 version: '3.8'
 
-
 x-variables:
   application_profile: &application_profile prod
-
 
 services:
   mysql-app-db:
@@ -27,7 +25,6 @@ services:
     networks:
       - spring-app-ms-net
 
-
   configserver:
     image: codebysun/configserver:v5
     container_name: configserver
@@ -36,15 +33,14 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: git,prod
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8071/actuator/health/readiness | grep UP || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8071/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
     networks:
       - spring-app-ms-net
-  
-  
+
   eurekaserver:
     image: codebysun/eurekaserver:v5
     container_name: eurekaserver
@@ -56,10 +52,13 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
       EUREKA_INSTANCE_HOSTNAME: eurekaserver
-      SPRING_CONFIG_SERVER: optional:configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      # Use spring.config.import style (quoted to avoid YAML parsing issues)
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
+      # Eureka server should not register/fetch registry from itself
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:8070/actuator/health/readiness | grep UP || exit 1" ]
+      test: ["CMD-SHELL", "curl -f http://localhost:8070/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -81,13 +80,14 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: http://configserver:8071
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
-    #    entrypoint: ["/bin/sh", "-c", "echo Starting Account Application  && java -jar app.jar --spring.profiles.active=*application_profile"]
+      # Use spring.config.import to load config from config server
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
+      # Eureka client defaultZone (point to eurekaserver)
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
     networks:
       - spring-app-ms-net
 
@@ -105,13 +105,12 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: http://configserver:8071
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
-    #    entrypoint: [ "/bin/sh", "-c", "echo Starting Loan Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
     networks:
       - spring-app-ms-net
 
@@ -129,13 +128,12 @@ services:
       - "8082:8082"
     environment:
       SPRING_PROFILES_ACTIVE: *application_profile
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_CONFIG_SERVER: http://configserver:8071
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka
-    #    entrypoint: [ "/bin/sh", "-c", "echo Starting Card Application  && java -jar app.jar --spring.profiles.active=*application_profile" ]
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
     networks:
       - spring-app-ms-net
 
