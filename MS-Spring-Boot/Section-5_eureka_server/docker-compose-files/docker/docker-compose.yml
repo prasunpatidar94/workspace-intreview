@@ -20,7 +20,7 @@ services:
       - sunbank-ms-net
 
   configserver:
-    image: codebysun/configserver:v1
+    image: codebysun/configserver:v5
     container_name: configserver
     ports:
       - "8071:8071"
@@ -33,7 +33,7 @@ services:
       - sunbank-ms-net
 
   eurekaserver:
-    image: codebysun/eurekaserver:v1
+    image: codebysun/eurekaserver:v5
     container_name: eurekaserver
     ports:
       - "8070:8070"
@@ -47,7 +47,7 @@ services:
       - sunbank-ms-net
 
   accounts:
-    image: codebysun/accounts:v1
+    image: codebysun/accounts:v5
     container_name: accounts
     ports:
       - "8080:8080"
@@ -66,7 +66,7 @@ services:
       - sunbank-ms-net
 
   loans:
-    image: codebysun/loans:v1
+    image: codebysun/loans:v5
     container_name: loans
     ports:
       - "8081:8081"
@@ -85,7 +85,7 @@ services:
       - sunbank-ms-net
 
   cards:
-    image: codebysun/cards:v1
+    image: codebysun/cards:v5
     container_name: cards
     ports:
       - "8082:8082"
