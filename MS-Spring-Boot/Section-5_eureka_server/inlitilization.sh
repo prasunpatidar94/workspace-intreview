@@ -14,7 +14,7 @@ echo "🔧 Building Config server application image..."
  mvn clean)
 sleep 2
 (cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/eurekaserver && \
- mvn clean compile install jib:dockerBuild -Dspring.profiles.active=prod -DskipTests)
+ mvn clean compile install jib:dockerBuild -DskipTests)
 sleep 2
 
 echo "🔧===================================Config server================================🔧"
@@ -23,7 +23,7 @@ echo "🔧 Building Config server application image..."
  mvn clean)
 sleep 2
 (cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/configserver && \
- mvn clean compile install jib:dockerBuild -Dspring.profiles.active=git,prod -DskipTests)
+ mvn clean compile install jib:dockerBuild -DskipTests)
 sleep 2
 
 echo "🔧===================================Accounts================================🔧"
@@ -32,7 +32,7 @@ echo "🔧 Building Accounts application image..."
  mvn clean)
 sleep 2
 (cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/accounts && \
- mvn clean compile install jib:dockerBuild -Dspring.profiles.active=prod -DskipTests)
+ mvn clean compile install jib:dockerBuild -DskipTests)
 sleep 2
 echo "🔧===================================Loans===================================🔧"
 echo "🔧 Building Loans application image..."
@@ -40,7 +40,7 @@ echo "🔧 Building Loans application image..."
  ./gradlew clean)
 sleep 2
 (cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/loans && \
- ./gradlew clean build jibDockerBuild -Dspring.profiles.active=prod -x test)
+ ./gradlew clean build jibDockerBuild  -x test)
 sleep 2
 echo "🔧===================================Cards===================================🔧"
 echo "🔧 Building Cards application image..."
@@ -48,7 +48,7 @@ echo "🔧 Building Cards application image..."
  ./gradlew clean)
 sleep 2
 (cd D:/workspace-intreview/MS-Spring-Boot/Section-5_eureka_server/cards && \
- ./gradlew clean build jibDockerBuild -Dspring.profiles.active=prod -x test)
+ ./gradlew clean build jibDockerBuild  -x test)
 sleep 2
 echo "🔧=============Docker Compose Container Deployment===========================🔧"
 echo "🐳 Starting Docker Compose for Container Deployment...!"

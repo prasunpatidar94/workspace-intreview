@@ -26,7 +26,7 @@ services:
       - "8071:8071"
     environment:
       SPRING_PROFILES_ACTIVE: git,prod
-      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: https://github.com/prasunpatidar94/workspace-intreview
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: 'https://github.com/prasunpatidar94/workspace-intreview.git'
     depends_on:
       - mysql-app-db
     networks:
@@ -38,7 +38,7 @@ services:
     ports:
       - "8070:8070"
     environment:
-      SPRING_PROFILES_ACTIVE: *application_profile
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
       EUREKA_INSTANCE_HOSTNAME: eurekaserver
     depends_on:
@@ -52,7 +52,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: *application_profile
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
       SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC'
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: 'http://eurekaserver:8070/eureka/'
@@ -71,7 +71,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_PROFILES_ACTIVE: *application_profile
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
       SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC'
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: 'http://eurekaserver:8070/eureka/'
@@ -90,7 +90,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_PROFILES_ACTIVE: *application_profile
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
       SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql-app-db:3306/sunbank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC'
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: 'http://eurekaserver:8070/eureka/'
