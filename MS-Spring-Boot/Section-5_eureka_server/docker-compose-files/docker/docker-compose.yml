@@ -18,6 +18,12 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -proot || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   configserver:
     image: codebysun/configserver:v5
@@ -28,9 +34,16 @@ services:
       SPRING_PROFILES_ACTIVE: git,prod
       SPRING_CLOUD_CONFIG_SERVER_GIT_URI: 'https://github.com/prasunpatidar94/workspace-intreview.git'
     depends_on:
-      - mysql-app-db
+      mysql-app-db:
+        condition: service_healthy
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8071/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   eurekaserver:
     image: codebysun/eurekaserver:v5
@@ -39,12 +52,19 @@ services:
       - "8070:8070"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
       EUREKA_INSTANCE_HOSTNAME: eurekaserver
     depends_on:
-      - configserver
+      configserver:
+        condition: service_healthy
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8070/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   accounts:
     image: codebysun/accounts:v5
@@ -59,11 +79,20 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
     depends_on:
-      - mysql-app-db
-      - configserver
-      - eurekaserver
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   loans:
     image: codebysun/loans:v5
@@ -78,11 +107,20 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
     depends_on:
-      - mysql-app-db
-      - configserver
-      - eurekaserver
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   cards:
     image: codebysun/cards:v5
@@ -97,11 +135,20 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: docker123
     depends_on:
-      - mysql-app-db
-      - configserver
-      - eurekaserver
+      mysql-app-db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     networks:
       - sunbank-ms-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8082/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
 volumes:
   mysql-data:
