@@ -1,28 +1,76 @@
+server:
+  port: 8082
 spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
   application:
-    name: ${SPRING_APPLICATION_NAME}
-  config:
-    import: ${SPRING_CONFIG_SERVER}
+    name: "cards"
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
+  config:
+    import: ${SPRING_CONFIG_IMPORT}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+  sql:
+    init:
+      mode: always            # Options: always, embedded, never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: false
+
+
+
+info:
+  app:
+    name: "cards"
+    description: "SUNBANK Cards Application"
+    version: "1.0.0 V"
+
+#eureka configuration ------------------
 eureka:
+  instance:
+    preferIpAddress: true
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE}
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+#euraka end --------------------
 
-#    import: "optional:configserver:http://localhost:8071/"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+endpoint:
+  shutdown:
+    enabled: true
+
+
 build:
-  version: "Docker-Release-1.0 V"
+  version: "1.0 V"
 
 cards:
-  massage: "Welcome In SunBank Cards Application with Docker configuration..!"
+  massage: "Welcome In SunBank Cards Application...!"
   contactDetails:
     name: "Prasun Patidar"
-    email: "{cipher}7e5f115446a084a43d93e9a9f5654f04ff14d1960ef705048348de9769d50c1e8695b0855a6797116a1f4d587685fe43"
+    email: "codebysun@gmail.com"
   onCallSupport:
-    - 11111-11111
-    - 77777-77777
+    - 88888-77777
+    - 99999-66666

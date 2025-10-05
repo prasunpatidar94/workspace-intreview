@@ -1,18 +1,22 @@
 server:
-  port: ${SERVER_PORT:8070}
+  port: 8070
 
 spring:
+  application:
+    name: eurekaserver
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
   config:
-    import: "configserver:http://${CONFIG_SERVER_HOST:configserver}:${CONFIG_SERVER_PORT:8071}/"
+    import: ${SPRING_CONFIG_IMPORT}
 
 eureka:
   instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME:eurekaserver}
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${EUREKA_INSTANCE_HOSTNAME}:${SERVER_PORT}/eureka
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
 
 management:
   endpoints:
