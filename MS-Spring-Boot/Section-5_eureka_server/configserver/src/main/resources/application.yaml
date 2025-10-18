@@ -14,7 +14,7 @@ spring:
           force-pull: true
           timeout: 5
 #          search-paths: "/MS-Spring-Boot/Section-5_eureka_server/configserver/src/main/resources/config"
-          search-paths: "/MS-Spring-Boot/Section-5_eureka_server/configserver/src/main/resources/config"
+          search-paths: "/MS-Spring-Boot/github-profiles/docker/config/"
           default-label: "main"
           clone-on-start: true
 #          clone-on-start: true
