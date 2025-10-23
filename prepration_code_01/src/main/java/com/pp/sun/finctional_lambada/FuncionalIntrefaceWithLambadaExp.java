@@ -40,14 +40,14 @@ public class FuncionalIntrefaceWithLambadaExp {
         Double thisV = this.addOfDepositAmound ;
         return (depositAmount+thisV);
     };
-    double aexpwihAdd= this.aexpwihAdd.showDebitedAmount(37774.88);
+//    double aexpwihAdd= this.aexpwihAdd.showDebitedAmount(37774.88);
     public static void main(String[] args) {
 
         // given implimentation and call functional interface abstract methods
         RBI rbiT1 = (depositAmount)-> depositAmount;
         AEXP aexp = depositAmount-> depositAmount;
 
-        System.out.println("aexpwihAdd.showDebitedAmount: "+aexpwihAdd);
+//        System.out.println("aexpwihAdd.showDebitedAmount: "+aexpwihAdd);
         System.out.println("rbiT1.showDebitedAmount: "+rbiT1.showDebitedAmount(1000.34));
 
         //Call Static method from Functional Interface
