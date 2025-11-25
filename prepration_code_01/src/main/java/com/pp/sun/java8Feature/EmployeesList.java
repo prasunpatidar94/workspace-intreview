@@ -4,42 +4,11 @@ package com.pp.sun.java8Feature;
 
 import java.util.*;
 
-class EmployeeDetail {
-    private int id;
-    private String name;
-    private String department;
-    private double salary;
-
-    // Constructor
-    public EmployeeDetail(int id, String name, String department, double salary) {
-        this.id = id;
-        this.name = name;
-        this.department = department;
-        this.salary = salary;
-    }
-
-    // Getters
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public String getDepartment() { return department; }
-    public double getSalary() { return salary; }
-
-    // toString() method for readable output
-    @Override
-    public String toString() {
-        return "EmployeeDetail{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", department='" + department + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
-}
 
 public class EmployeesList {
 
 
-    static List<EmployeeDetail> addEmployeesDetails(){
+    public static List<EmployeeDetail> addEmployeesDetails(){
         List<EmployeeDetail> employees = new ArrayList<>();
 
         // Departments
