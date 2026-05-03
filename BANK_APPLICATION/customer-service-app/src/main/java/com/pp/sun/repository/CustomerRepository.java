@@ -1,6 +1,6 @@
 package com.pp.sun.repository;
 
-import com.pp.sun.repository.entity.CustomerEntity;
+import com.pp.sun.entity.CustomerEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
