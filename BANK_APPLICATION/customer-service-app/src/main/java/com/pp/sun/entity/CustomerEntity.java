@@ -1,4 +1,4 @@
-package com.pp.sun.repository.entity;
+package com.pp.sun.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

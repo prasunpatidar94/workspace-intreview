@@ -1,6 +1,6 @@
 package com.pp.sun.dto;
 
-import com.pp.sun.repository.entity.KycStatus;
+import com.pp.sun.entity.KycStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
